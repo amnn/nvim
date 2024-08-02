@@ -1,0 +1,1 @@
+# @amnn's neovim config
