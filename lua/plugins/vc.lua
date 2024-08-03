@@ -1,42 +1,42 @@
 return {
   {
-    "FabijanZulj/blame.nvim",
-    cmds = { "BlameToggle" },
-    keys = {
-      {
-        "gB",
-        function() vim.cmd [[BlameToggle]] end,
-        desc = "Toggle [g]it [B]lame for file",
-      },
-    },
-    config = function()
-      require("blame").setup {
-        date_format = "%Y-%m-%d",
-        virtual_style = "float",
-        max_summary_width = 40,
-        format_fn = require("blame.formats.default_formats").date_message,
-      }
-    end,
-  },
-  {
-    "NeogitOrg/neogit",
+    "tpope/vim-fugitive",
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-      "sindrets/diffview.nvim",
+      "tpope/vim-rhubarb",
     },
-    opts = {
-      signs = {
-        hunk = { "▶", "▼" },
-        item = { "▶", "▼" },
-        section = { "▶", "▼" },
-      },
-    },
+    cmds = { "G", "Git" },
     keys = {
       {
         "<leader>v",
-        function() require("neogit").open() end,
+        [[<CMD>G<CR>]],
         desc = "Open [v]ersion control",
+      },
+      {
+        "gB",
+        [[<CMD>G blame<CR>]],
+        desc = "Toggle [g]it [B]lame for file",
+      },
+      {
+        "gh",
+        [[:0GBrowse<CR>]],
+        desc = "Open on [G]it[H]ub",
+      },
+      {
+        "gh",
+        mode = { "v" },
+        [[:'<,'>GBrowse<CR>]],
+        desc = "Open selection on [G]it[H]ub",
+      },
+      {
+        "gH",
+        [[:0GBrowse!<CR>]],
+        desc = "Copy [G]it[H]ub URL",
+      },
+      {
+        "gH",
+        mode = { "v" },
+        [[:'<,'>GBrowse!<CR>]],
+        desc = "Copy [G]it[H]ub URL for selection",
       },
     },
   },
@@ -53,64 +53,6 @@ return {
         "gb",
         function() require("gitsigns").toggle_current_line_blame() end,
         desc = "Toggle [g]it [b]lame for current line",
-      },
-    },
-  },
-  {
-    "ruifm/gitlinker.nvim",
-    opts = {
-      mappings = nil,
-    },
-    keys = {
-      {
-        "gh",
-        mode = "n",
-        function()
-          require("gitlinker").get_buf_range_url("n", {
-            action_callback = require("gitlinker.actions").open_in_browser,
-          })
-        end,
-        desc = "Open on [G]it[H]ub",
-      },
-      {
-        "gh",
-        mode = "v",
-        function()
-          require("gitlinker").get_buf_range_url("v", {
-            action_callback = require("gitlinker.actions").open_in_browser,
-          })
-        end,
-        desc = "Open on [G]it[H]ub",
-      },
-      {
-        "gH",
-        mode = "n",
-        function()
-          require("gitlinker").get_buf_range_url("n", {
-            action_callback = require("gitlinker.actions").copy_to_clipboard,
-          })
-        end,
-        desc = "Copy [G]it[H]ub URL",
-      },
-      {
-        "gH",
-        mode = "v",
-        function()
-          require("gitlinker").get_buf_range_url("v", {
-            action_callback = require("gitlinker.actions").copy_to_clipboard,
-          })
-        end,
-        desc = "Copy [G]it[H]ub URL",
-      },
-    },
-  },
-  {
-    "sindrets/diffview.nvim",
-    opts = {
-      view = {
-        merge_tool = {
-          layout = "diff4_mixed",
-        },
       },
     },
   },

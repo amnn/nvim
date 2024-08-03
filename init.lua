@@ -74,9 +74,6 @@ vim.g.maplocalleader = ";"
 
 require "config.lazy"
 
--- TODO: Set-up repo.
-
--- TODO: Re-try vim-fugitive
 -- TODO: Try fzf-lua
 
 -- Projects Keybindings
