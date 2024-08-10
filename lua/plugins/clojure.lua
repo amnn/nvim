@@ -16,6 +16,18 @@ return {
     },
     ft = { "clojure" },
     lazy = true,
+    init = function()
+      vim.g["conjure#filetypes"] = {
+        "clojure",
+        "fennel",
+        "janet",
+        "hy",
+        "racket",
+        "scheme",
+        "lisp",
+        "sql",
+      }
+    end,
   },
   {
     "clojure-vim/vim-jack-in",
