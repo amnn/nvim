@@ -74,8 +74,6 @@ vim.g.maplocalleader = ";"
 
 require "config.lazy"
 
--- TODO: Fix C-p for nvim-cmp (It seems to be bound to something else, so it
--- doesn't always go back up the selection list).
 -- TODO: Try fzf-lua
 
 -- TODO: TODO Comments -- don't expect the colon
