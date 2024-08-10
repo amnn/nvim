@@ -74,7 +74,11 @@ vim.g.maplocalleader = ";"
 
 require "config.lazy"
 
+-- TODO: Fix C-p for nvim-cmp (It seems to be bound to something else, so it
+-- doesn't always go back up the selection list).
 -- TODO: Try fzf-lua
+
+-- TODO: TODO Comments -- don't expect the colon
 
 -- Projects Keybindings
 -- TODO: Search (ripgrep) in project root
@@ -89,3 +93,7 @@ require "config.lazy"
 
 -- TODO: Investigate issue with nvim taking a while to close:
 -- nvim -V10vim.log will offer debug of what is going on.
+
+-- TODO: Pin plugins to specific versions
+-- TODO: Key/Command descriptions should include the plugin name
+-- TODO: Descriptions for commands defined in vimscript
