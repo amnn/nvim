@@ -1,42 +1,28 @@
 return {
   { -- Color Scheme
-    "Shatur/neovim-ayu",
+    "miikanissi/modus-themes.nvim",
+    priority = 1000,
     config = function()
-      local ayu = require "ayu"
-      local colors = require "ayu.colors"
-      colors.generate(false)
-
-      local function background()
-        if vim.o.background == "dark" then
-          return "#0e1419"
-        else
-          return "#fafafa"
-        end
-      end
-
-      ayu.setup {
-        terminal = false,
-        overrides = function()
-          return {
-            ColorColumn = { bg = colors.guide_normal },
-            Normal = { bg = background() },
-            SignColumn = { bg = "None" },
-            WinSeparator = { bg = "None" },
-            TreesitterContext = { bg = "None" },
-          }
+      require("modus-themes").setup {
+        on_highlights = function(highlights, colors)
+          highlights.ColorColumn.bg = "NONE"
+          highlights.SignColumn.bg = "NONE"
+          highlights.LineNr.bg = "NONE"
+          highlights.LineNrAbove.bg = "NONE"
+          highlights.LineNrBelow.bg = "NONE"
+          highlights.WinSeparator = { bg = "NONE" }
+          highlights.TreesitterContext = { bg = "NONE" }
         end,
       }
 
-      ayu.colorscheme()
       vim.o.fillchars = "vert: "
-      vim.opt.colorcolumn = vim.fn.range(80, 120)
+      vim.opt.colorcolumn = vim.fn.range(80, 100)
+
+      vim.cmd [[colorscheme modus]]
     end,
   },
   { -- Status line
     "nvim-lualine/lualine.nvim",
-    dependencies = {
-      "Shatur/neovim-ayu",
-    },
     init = function() vim.g.ayuprefermirage = true end,
     opts = {
       options = {

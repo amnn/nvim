@@ -101,5 +101,3 @@ require "config.lazy"
 -- TODO vim-flog (floggraph) keybindings to delete branches
 -- TODO vim-flog (floggraph) keybindings to update-ref
 -- TODO vim-flog (floggraph) keybinding or command for default log command: :Flog -- --branches main..@
-
--- TODO Try modus themes
