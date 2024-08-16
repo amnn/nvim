@@ -42,6 +42,14 @@ map({ "n", "x", "o" }, "gj", "j", { remap = false })
 map({ "n", "x", "o" }, "k", "gk", { remap = false })
 map({ "n", "x", "o" }, "gk", "k", { remap = false })
 
+-- Moving lines
+map({ "n" }, "<A-j>", "<CMD>m +1<CR>")
+map({ "n" }, "<A-k>", "<CMD>m -2<CR>")
+map({ "i" }, "<A-j>", "<CMD>m +1<CR>")
+map({ "i" }, "<A-k>", "<CMD>m -2<CR>")
+map({ "v" }, "<A-j>", ":m '>+1<CR>gv")
+map({ "v" }, "<A-k>", ":m '<-2<CR>gv")
+
 -- Snippets
 map({ "i", "s" }, "<C-f>", function()
   if vim.snippet.active { direction = 1 } then
@@ -96,7 +104,6 @@ require "config.lazy"
 -- TODO Descriptions for commands defined in vimscript
 -- TODO Bindings to move splits around
 
--- TODO gitrebase commands for shifting lines up and down. (Maybe this would be useful in general)?
 -- TODO:fugitive keybinding to refresh
 -- TODO vim-flog (floggraph) keybindings to delete branches
 -- TODO vim-flog (floggraph) keybindings to update-ref
