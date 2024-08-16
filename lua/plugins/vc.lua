@@ -8,7 +8,7 @@ return {
     keys = {
       {
         "<leader>v",
-        [[<CMD>G<CR>]],
+        [[<CMD>tab G<CR>]],
         desc = "Open [v]ersion control",
       },
       {
