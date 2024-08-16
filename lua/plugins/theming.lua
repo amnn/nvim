@@ -50,6 +50,7 @@ return {
       require("dark_notify").run {
         onchange = function(mode)
           -- Notify Kitty that it should change its color scheme as well.
+          local conf = mode == "dark" and "vivendi" or "operandi"
           require("plenary.job")
             :new({
               command = "kitty",
@@ -60,7 +61,7 @@ return {
                 "set-colors",
                 "--all",
                 "--configured",
-                "~/.config/kitty/ayu-" .. mode .. ".conf",
+                "~/.config/kitty/modus-" .. conf .. ".conf",
               },
               enable_handlers = false,
             })
