@@ -75,6 +75,7 @@ vim.g.maplocalleader = ";"
 require "config.lazy"
 
 -- TODO Try fzf-lua
+-- TODO keybinding to resume last fzf command
 
 -- Projects Keybindings
 -- TODO Search (ripgrep) in project root
