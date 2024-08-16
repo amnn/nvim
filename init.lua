@@ -14,7 +14,7 @@ vim.opt.foldmethod = "expr"
 vim.opt.foldenable = false
 vim.opt.foldlevel = 99
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
--- TODO: Waiting for treesitter foldtext support to be released.
+-- TODO Waiting for treesitter foldtext support to be released.
 -- vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
 
 -- Word-wrap
@@ -74,24 +74,22 @@ vim.g.maplocalleader = ";"
 
 require "config.lazy"
 
--- TODO: Try fzf-lua
-
--- TODO: TODO Comments -- don't expect the colon
+-- TODO Try fzf-lua
 
 -- Projects Keybindings
--- TODO: Search (ripgrep) in project root
--- TODO: Open Fugitive Status
+-- TODO Search (ripgrep) in project root
+-- TODO Open Fugitive Status
 
 -- DAP
--- TODO: Rust: Code LLDB + DAP UI (+ VSCode Icon font)
+-- TODO Rust: Code LLDB + DAP UI (+ VSCode Icon font)
 
 -- Move
--- TODO: Tree Sitter
--- TODO: Move Analyzer
+-- TODO Tree Sitter
+-- TODO Move Analyzer
 
--- TODO: Investigate issue with nvim taking a while to close:
+-- TODO Investigate issue with nvim taking a while to close:
 -- nvim -V10vim.log will offer debug of what is going on.
 
--- TODO: Pin plugins to specific versions
--- TODO: Key/Command descriptions should include the plugin name
--- TODO: Descriptions for commands defined in vimscript
+-- TODO Pin plugins to specific versions
+-- TODO Key/Command descriptions should include the plugin name
+-- TODO Descriptions for commands defined in vimscript

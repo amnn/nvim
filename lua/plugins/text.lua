@@ -78,7 +78,17 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim",
     },
-    opts = {},
+    opts = {
+      highlight = {
+        before = "",
+        after = "",
+        keyword = "fg",
+        pattern = [[.*<(KEYWORDS)>]],
+      },
+      search = {
+        pattern = [[\b(KEYWORDS)\b]],
+      },
+    },
   },
   {
     "gabrielpoca/replacer.nvim",
