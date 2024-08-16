@@ -93,3 +93,13 @@ require "config.lazy"
 -- TODO Pin plugins to specific versions
 -- TODO Key/Command descriptions should include the plugin name
 -- TODO Descriptions for commands defined in vimscript
+-- TODO Bindings to move splits around
+
+-- TODO Git status in floating window
+-- TODO gitrebase commands for shifting lines up and down. (Maybe this would be useful in general)?
+-- TODO:fugitive keybinding to refresh
+-- TODO vim-flog (floggraph) keybindings to delete branches
+-- TODO vim-flog (floggraph) keybindings to update-ref
+-- TODO vim-flog (floggraph) keybinding or command for default log command: :Flog -- --branches main..@
+
+-- TODO Try modus themes
