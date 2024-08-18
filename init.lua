@@ -102,5 +102,3 @@ require "config.lazy"
 -- TODO Pin plugins to specific versions
 -- TODO Key/Command descriptions should include the plugin name
 -- TODO Descriptions for commands defined in vimscript
--- TODO Bindings to move splits around
-
