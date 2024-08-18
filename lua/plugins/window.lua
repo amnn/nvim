@@ -1,6 +1,7 @@
 return {
   {
     "sindrets/winshift.nvim",
+    version = "*",
     opts = {
       keymaps = {
         win_move_mode = {

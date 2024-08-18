@@ -1,9 +1,8 @@
 return {
   {
     "ahmedkhalf/project.nvim",
-
+    version = "*",
     events = { "VeryLazy" },
-
     config = function()
       require("project_nvim").setup {
         detection_methods = { "lsp", "pattern" },
@@ -13,11 +12,13 @@ return {
   },
   {
     "folke/trouble.nvim",
+    version = "*",
     opts = {},
     cmd = "Trouble",
   },
   {
     "folke/which-key.nvim",
+    version = "*",
     event = "VeryLazy",
     opts = {},
     keys = {
@@ -30,6 +31,7 @@ return {
   },
   {
     "nvim-telescope/telescope.nvim",
+    version = "*",
     dependencies = {
       "ahmedkhalf/project.nvim",
       "folke/trouble.nvim",
@@ -200,6 +202,7 @@ return {
   },
   {
     "stevearc/oil.nvim",
+    version = "*",
     opts = {
       columns = {
         "icon",

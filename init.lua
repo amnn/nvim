@@ -98,5 +98,3 @@ require "config.lazy"
 
 -- TODO Investigate issue with nvim taking a while to close:
 -- nvim -V10vim.log will offer debug of what is going on.
-
--- TODO Pin plugins to specific versions

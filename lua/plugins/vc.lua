@@ -1,6 +1,7 @@
 return {
   {
     "tpope/vim-fugitive",
+    version = "*",
     dependencies = {
       "tpope/vim-rhubarb",
     },
@@ -42,10 +43,12 @@ return {
   },
   {
     "akinsho/git-conflict.nvim",
+    version = "*",
     opts = {},
   },
   {
     "lewis6991/gitsigns.nvim",
+    version = "*",
     opts = {},
     lazy = false,
     init = function()
@@ -85,6 +88,7 @@ return {
   },
   {
     "rbong/vim-flog",
+    version = "*",
     dependencies = {
       "tpope/vim-fugitive",
     },

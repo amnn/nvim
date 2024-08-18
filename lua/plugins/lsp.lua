@@ -1,6 +1,7 @@
 return {
   {
     "aznhe21/actions-preview.nvim",
+    version = "*",
     opts = {
       telescope = {
         sorting_strategy = "ascending",
@@ -24,6 +25,7 @@ return {
   },
   {
     "hrsh7th/cmp-nvim-lsp",
+    version = "*",
     dependencies = {
       "hrsh7th/nvim-cmp",
     },
@@ -31,6 +33,7 @@ return {
   },
   {
     "hrsh7th/nvim-cmp",
+    version = "*",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "petertriho/cmp-git",
@@ -63,6 +66,7 @@ return {
   },
   {
     "j-hui/fidget.nvim",
+    version = "*",
     opts = {
       notification = {
         window = {},
@@ -71,14 +75,12 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-
+    version = "*",
     events = { "VeryLazy" },
-
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
       "williamboman/mason-lspconfig.nvim",
     },
-
     config = function()
       local lsp = require "lspconfig"
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -138,10 +140,12 @@ return {
   },
   {
     "petertriho/cmp-git",
+    version = "*",
     opts = {},
   },
   {
     "rcarriga/nvim-dap-ui",
+    version = "*",
     dependencies = {
       "mfussenegger/nvim-dap",
       "nvim-neotest/nvim-nio",
@@ -149,6 +153,7 @@ return {
   },
   {
     "stevearc/conform.nvim",
+    version = "*",
     opts = {
       formatters_by_ft = {
         c = { "clang-format" },
@@ -175,6 +180,7 @@ return {
   },
   {
     "williamboman/mason-lspconfig.nvim",
+    version = "*",
     dependencies = {
       "williamboman/mason.nvim",
     },
@@ -184,6 +190,7 @@ return {
   },
   {
     "williamboman/mason.nvim",
+    version = "*",
     opts = {},
   },
 }

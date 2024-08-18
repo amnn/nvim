@@ -1,6 +1,7 @@
 return {
   {
     "github/copilot.vim",
+    version = "*",
     init = function() vim.g.copilot_no_tab_map = true end,
     lazy = false,
     keys = {
@@ -16,6 +17,7 @@ return {
   },
   {
     "robitx/gp.nvim",
+    version = "*",
     dependencies = {
       "folke/which-key.nvim",
     },

@@ -1,6 +1,7 @@
 return {
   { -- Color Scheme
     "miikanissi/modus-themes.nvim",
+    version = "*",
     priority = 1000,
     config = function()
       require("modus-themes").setup {
@@ -24,6 +25,7 @@ return {
   },
   { -- Status line
     "nvim-lualine/lualine.nvim",
+    version = "*",
     init = function() vim.g.ayuprefermirage = true end,
     opts = {
       options = {
@@ -43,6 +45,7 @@ return {
   },
   { -- Automatically detect light and dark mode
     "cormacrelf/dark-notify",
+    version = "*",
     dependencies = {
       -- Necessary to run the command to talk to kitty shell
       { "nvim-lua/plenary.nvim" },

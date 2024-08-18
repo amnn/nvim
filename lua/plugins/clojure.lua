@@ -1,6 +1,7 @@
 return {
   {
     "PaterJason/cmp-conjure",
+    version = "*",
     lazy = true,
     config = function()
       local cmp = require "cmp"
@@ -11,6 +12,7 @@ return {
   },
   {
     "Olical/conjure",
+    version = "*",
     dependenceies = {
       "PaterJason/cmp-conjure",
     },
@@ -31,6 +33,7 @@ return {
   },
   {
     "clojure-vim/vim-jack-in",
+    version = "*",
     dependenceies = {
       "radenling/vim-dispatch-neovim",
       "tpope/vim-dispatch",

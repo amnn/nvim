@@ -1,6 +1,7 @@
 return {
   {
     "Grazfather/sexp.nvim",
+    version = "*",
     dependencies = {
       "tpope/vim-repeat",
     },
@@ -27,6 +28,7 @@ return {
   },
   {
     "HiPhish/rainbow-delimiters.nvim",
+    version = "*",
     config = function()
       local rainbow_delimiters = require "rainbow-delimiters"
       require("rainbow-delimiters.setup").setup {
@@ -41,10 +43,12 @@ return {
   },
   {
     "cappyzawa/trim.nvim",
+    version = "*",
     opts = {},
   },
   {
     "folke/flash.nvim",
+    version = "*",
     event = "VeryLazy",
     opts = {
       keys = { "f", "F", "t", "T", [";"] = "\\", "," },
@@ -74,6 +78,7 @@ return {
   },
   {
     "folke/todo-comments.nvim",
+    version = "*",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim",
@@ -92,14 +97,17 @@ return {
   },
   {
     "gabrielpoca/replacer.nvim",
+    version = "*",
   },
   {
     "kylechui/nvim-surround",
+    version = "*",
     event = "VeryLazy",
     opts = {},
   },
   {
     "m4xshen/autoclose.nvim",
+    version = "*",
     opts = {
       keys = {
         ["'"] = { escape = true, close = false, pair = "''" },
