@@ -10,6 +10,7 @@ return {
           highlights.LineNr.bg = "NONE"
           highlights.LineNrAbove.bg = "NONE"
           highlights.LineNrBelow.bg = "NONE"
+          highlights.NormalFloat = { bg = colors.bg_main }
           highlights.WinSeparator = { bg = "NONE" }
           highlights.TreesitterContext = { bg = "NONE" }
         end,
