@@ -10,7 +10,7 @@ return {
         'copilot#Accept("\\<CR>")',
         expr = true,
         replace_keycodes = false,
-        desc = "Accept Copilot suggestion",
+        desc = "Accept suggestion (Copilot)",
       },
     },
   },

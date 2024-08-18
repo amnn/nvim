@@ -24,7 +24,7 @@ return {
       {
         "<leader>?",
         function() require("which-key").show { global = false } end,
-        desc = "Buffer local Keymaps (which-key)",
+        desc = "Buffer local Keymaps (Which Key)",
       },
     },
   },
@@ -97,39 +97,39 @@ return {
       {
         "<leader>b",
         function() require("telescope.builtin").buffers() end,
-        desc = "Choose [b]uffer",
+        desc = "Choose [b]uffer (Telescope)",
       },
       {
         "<leader>f",
         function() require("telescope.builtin").find_files() end,
-        desc = "Choose [f]iles",
+        desc = "Choose [f]iles (Telescope)",
       },
       {
         "<leader>F",
         function() require("telescope.builtin").oldfiles() end,
-        desc = "Previously opened [f]iles",
+        desc = "Previously opened [f]iles (Telescope)",
       },
       {
         "<leader>g",
         function()
           require("telescope").extensions.live_grep_args.live_grep_args()
         end,
-        desc = "Rip[g]rep",
+        desc = "Rip[g]rep (Telescope)",
       },
       {
         "<leader>s",
         function() require("telescope.builtin").current_buffer_fuzzy_find() end,
-        desc = "[S]earch lines in buffer",
+        desc = "[S]earch lines in buffer (Telescope)",
       },
       {
         "<leader>x",
         function() require("telescope.builtin").commands() end,
-        desc = "Commands to e[x]ecute",
+        desc = "Commands to e[x]ecute (Telescope)",
       },
       {
         "<leader>k",
         function() require("telescope.builtin").keymaps() end,
-        desc = "List [k]eymaps",
+        desc = "List [k]eymaps (Telescope)",
       },
       {
         "<leader>p",
@@ -137,64 +137,64 @@ return {
         -- this package is not loaded lazily, and we set-up its keybinding in
         -- telescope instead.
         function() require("telescope").extensions.projects.projects {} end,
-        desc = "Choose [p]roject",
+        desc = "Choose [p]roject (Telescope/Projects)",
       },
       {
         "<leader>P",
         -- Duplicate of above keybinding, because I'm very used to using the
         -- capital letter version.
         function() require("telescope").extensions.projects.projects {} end,
-        desc = "Choose [P]roject",
+        desc = "Choose [P]roject (Telescope/Projects)",
       },
       {
         "ge",
         function() require("telescope.builtin").diagnostics { bufnr = 0 } end,
-        desc = "List [e]rrors in file",
+        desc = "List [e]rrors in file (Telescope)",
       },
       {
         "gE",
         function() require("telescope.builtin").diagnostics() end,
-        desc = "List [E]rrors in workspace",
+        desc = "List [E]rrors in workspace (Telescope)",
       },
       {
         "gs",
         function() require("telescope.builtin").lsp_dynamic_workspace_symbols() end,
-        desc = "List [s]ymbols in workspace",
+        desc = "List [s]ymbols in workspace (Telescope)",
       },
       {
         "<leader>r",
         function() vim.lsp.buf.rename() end,
-        desc = "[R]ename symbol",
+        desc = "[R]ename symbol (LSP)",
       },
       {
         "gi",
         function() require("telescope.builtin").lsp_implementations() end,
-        desc = "List [i]mplementations",
+        desc = "List [i]mplementations (Telescope)",
       },
       {
         "gd",
         function() require("telescope.builtin").lsp_definitions() end,
-        desc = "List [d]efinitions",
+        desc = "List [d]efinitions (Telescope)",
       },
       {
         "gr",
         function() require("telescope.builtin").lsp_references() end,
-        desc = "List [r]eferences",
+        desc = "List [r]eferences (Telescope)",
       },
       {
         "gy",
         function() require("telescope.builtin").lsp_type_definitions() end,
-        desc = "List t[y]pe definitions",
+        desc = "List t[y]pe definitions (Telescope)",
       },
       {
         "gCi",
         function() require("telescope.builtin").lsp_incoming_calls() end,
-        desc = "List [i]ncoming [c]alls",
+        desc = "List [i]ncoming [c]alls (Telescope)",
       },
       {
         "gCo",
         function() require("telescope.builtin").lsp_outgoing_calls() end,
-        desc = "List [o]utgoing [c]alls",
+        desc = "List [o]utgoing [c]alls (Telescope)",
       },
     },
   },
@@ -219,12 +219,12 @@ return {
       {
         "-",
         function() require("oil").open(vim.fn.expand "%:h") end,
-        desc = "Open parent directory in Oil",
+        desc = "Open parent directory (Oil)",
       },
       {
         "_",
-        desc = "Open Neovim's current working directory in Oil.",
         function() require("oil").open(vim.fn.getcwd()) end,
+        desc = "Open Neovim's current working directory (Oil)",
       },
     },
   },

@@ -100,5 +100,3 @@ require "config.lazy"
 -- nvim -V10vim.log will offer debug of what is going on.
 
 -- TODO Pin plugins to specific versions
--- TODO Key/Command descriptions should include the plugin name
--- TODO Descriptions for commands defined in vimscript

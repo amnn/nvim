@@ -18,7 +18,7 @@ return {
       {
         "<leader>a",
         function() require("actions-preview").code_actions() end,
-        desc = "Code [A]ctions",
+        desc = "Code [A]ctions (Actions Preview)",
       },
     },
   },
