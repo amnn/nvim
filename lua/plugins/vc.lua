@@ -88,6 +88,13 @@ return {
     dependencies = {
       "tpope/vim-fugitive",
     },
-    cmd = { "Flog", "Flogsplit", "Floggit" },
+    cmd = { "Feat", "Flog", "Flogsplit", "Floggit" },
+    init = function()
+      vim.api.nvim_create_user_command(
+        "Feat",
+        function() vim.cmd [[Flog -- --branches ^origin/main]] end,
+        { desc = "Show [Feat]ure branches (Flog)" }
+      )
+    end,
   },
 }

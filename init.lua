@@ -104,4 +104,3 @@ require "config.lazy"
 -- TODO Descriptions for commands defined in vimscript
 -- TODO Bindings to move splits around
 
--- TODO vim-flog (floggraph) keybinding or command for default log command: :Flog -- --branches main..@
