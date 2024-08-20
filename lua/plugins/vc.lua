@@ -100,6 +100,6 @@ return {
     dependencies = {
       "tpope/vim-fugitive",
     },
-    cmd = { "Feat", "Flog", "Flogsplit", "Floggit" },
+    cmd = { "Flog", "Flogsplit", "Floggit" },
   },
 }
