@@ -1,3 +1,11 @@
+-- Register custom commands before returning plugin specs, so that they can be
+-- used to lazy-load the plugins.
+vim.api.nvim_create_user_command(
+  "Feat",
+  function() vim.cmd [[Flog -- --branches ^origin/main]] end,
+  { desc = "Show [Feat]ure branches (Flog)" }
+)
+
 return {
   {
     "tpope/vim-fugitive",
@@ -93,12 +101,5 @@ return {
       "tpope/vim-fugitive",
     },
     cmd = { "Feat", "Flog", "Flogsplit", "Floggit" },
-    init = function()
-      vim.api.nvim_create_user_command(
-        "Feat",
-        function() vim.cmd [[Flog -- --branches ^origin/main]] end,
-        { desc = "Show [Feat]ure branches (Flog)" }
-      )
-    end,
   },
 }
