@@ -15,6 +15,17 @@ local function prep(template)
   end
 end
 
+-- Execute a `git` command directly, without user confirmation.
+--
+-- The template is resolved with `flog#Format` which will resolve ref names,
+-- commit SHA's etc.
+local function exec(template)
+  return function()
+    local cmd = vim.fn.call("flog#Format", { ":Floggit " .. template })
+    vim.cmd(cmd)
+  end
+end
+
 map(
   "n",
   "bc",
@@ -41,4 +52,12 @@ map(
   "bu",
   prep "update-ref refs/heads/",
   { buffer = true, desc = "[U]pdate [b]ranch" }
+)
+
+map("n", "p", exec "push origin %b", { buffer = true, desc = "[P]ush" })
+map(
+  "n",
+  "P",
+  exec "push --force-with-lease origin %b",
+  { buffer = true, desc = "Force [p]ush" }
 )
