@@ -82,10 +82,11 @@ vim.g.maplocalleader = ";"
 
 require "config.lazy"
 
--- TODO Try fzf-lua
--- TODO keybinding to resume last fzf command
+-- FIXME fzf live grep hangs on <C-c> -- fixed by neovim/neovim#30056
+-- TODO fzf-lua trouble integration
 
 -- Projects Keybindings
+-- TODO Open Project
 -- TODO Search (ripgrep) in project root
 -- TODO Open Fugitive Status
 

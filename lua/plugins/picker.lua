@@ -97,43 +97,6 @@ return {
 
     keys = {
       {
-        "<leader>b",
-        function() require("telescope.builtin").buffers() end,
-        desc = "Choose [b]uffer (Telescope)",
-      },
-      {
-        "<leader>f",
-        function() require("telescope.builtin").find_files() end,
-        desc = "Choose [f]iles (Telescope)",
-      },
-      {
-        "<leader>F",
-        function() require("telescope.builtin").oldfiles() end,
-        desc = "Previously opened [f]iles (Telescope)",
-      },
-      {
-        "<leader>g",
-        function()
-          require("telescope").extensions.live_grep_args.live_grep_args()
-        end,
-        desc = "Rip[g]rep (Telescope)",
-      },
-      {
-        "<leader>s",
-        function() require("telescope.builtin").current_buffer_fuzzy_find() end,
-        desc = "[S]earch lines in buffer (Telescope)",
-      },
-      {
-        "<leader>x",
-        function() require("telescope.builtin").commands() end,
-        desc = "Commands to e[x]ecute (Telescope)",
-      },
-      {
-        "<leader>k",
-        function() require("telescope.builtin").keymaps() end,
-        desc = "List [k]eymaps (Telescope)",
-      },
-      {
         "<leader>p",
         -- Projects lazy loads the list of projects on setup, so we make sure
         -- this package is not loaded lazily, and we set-up its keybinding in
@@ -148,20 +111,75 @@ return {
         function() require("telescope").extensions.projects.projects {} end,
         desc = "Choose [P]roject (Telescope/Projects)",
       },
+    },
+  },
+  {
+    "ibhagwan/fzf-lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+      winopts = {
+        width = 0.6,
+        preview = {
+          layout = "flex",
+          flip_columns = 200,
+        },
+      },
+    },
+    keys = {
+      {
+        "<leader>b",
+        function() require("fzf-lua").buffers() end,
+        desc = "Choose [b]uffer (fzf)",
+      },
+      {
+        "<leader>f",
+        function() require("fzf-lua").files() end,
+        desc = "Choose [f]iles (fzf)",
+      },
+      {
+        "<leader>F",
+        function() require("fzf-lua").oldfiles() end,
+        desc = "Previously opened [f]iles (fzf)",
+      },
+      {
+        "<leader>g",
+        function() require("fzf-lua").live_grep_glob() end,
+        desc = "Rip[g]rep (fzf)",
+      },
+      {
+        "<leader>G",
+        function() require("fzf-lua").live_grep_resume() end,
+        desc = "Resume rip[g]rep (fzf)",
+      },
+      {
+        "<leader>s",
+        function() require("fzf-lua").blines() end,
+        desc = "[S]earch lines in buffer (fzf)",
+      },
+      {
+        "<leader>x",
+        function() require("fzf-lua").commands() end,
+        desc = "Commands to e[x]ecute (fzf)",
+      },
+      {
+        "<leader>k",
+        function() require("fzf-lua").keymaps() end,
+        desc = "List [k]eymaps (fzf)",
+      },
       {
         "ge",
-        function() require("telescope.builtin").diagnostics { bufnr = 0 } end,
-        desc = "List [e]rrors in file (Telescope)",
+        function() require("fzf-lua").lsp_document_diagnostics() end,
+        desc = "List [e]rrors in file (fzf)",
       },
       {
         "gE",
-        function() require("telescope.builtin").diagnostics() end,
-        desc = "List [E]rrors in workspace (Telescope)",
+        function() require("fzf-lua").lsp_workspace_diagnostics() end,
+        desc = "List [E]rrors in workspace (fzf)",
       },
       {
         "gs",
-        function() require("telescope.builtin").lsp_dynamic_workspace_symbols() end,
-        desc = "List [s]ymbols in workspace (Telescope)",
+        function() require("fzf-lua").lsp_workspace_symbols() end,
+        desc = "List [s]ymbols in workspace (fzf)",
       },
       {
         "<leader>r",
@@ -169,34 +187,51 @@ return {
         desc = "[R]ename symbol (LSP)",
       },
       {
+        "<leader>a",
+        function() require("fzf-lua").lsp_code_actions() end,
+        desc = "Code [a]ctions (fzf)",
+      },
+      {
         "gi",
-        function() require("telescope.builtin").lsp_implementations() end,
-        desc = "List [i]mplementations (Telescope)",
+        function()
+          require("fzf-lua").lsp_implementations { jump_to_single_result = true }
+        end,
+        desc = "List [i]mplementations (fzf)",
       },
       {
         "gd",
-        function() require("telescope.builtin").lsp_definitions() end,
-        desc = "List [d]efinitions (Telescope)",
+        function()
+          require("fzf-lua").lsp_definitions { jump_to_single_result = true }
+        end,
+        desc = "List [d]efinitions (fzf)",
       },
       {
         "gr",
-        function() require("telescope.builtin").lsp_references() end,
-        desc = "List [r]eferences (Telescope)",
+        function()
+          require("fzf-lua").lsp_references { jump_to_single_result = true }
+        end,
+        desc = "List [r]eferences (fzf)",
       },
       {
         "gy",
-        function() require("telescope.builtin").lsp_type_definitions() end,
-        desc = "List t[y]pe definitions (Telescope)",
+        function()
+          require("fzf-lua").lsp_typedefs { jump_to_single_result = true }
+        end,
+        desc = "List t[y]pe definitions (fzf)",
       },
       {
         "gCi",
-        function() require("telescope.builtin").lsp_incoming_calls() end,
-        desc = "List [i]ncoming [c]alls (Telescope)",
+        function()
+          require("fzf-lua").lsp_incoming_calls { jump_to_single_result = true }
+        end,
+        desc = "List [i]ncoming [c]alls (fzf)",
       },
       {
         "gCo",
-        function() require("telescope.builtin").lsp_outgoing_calls() end,
-        desc = "List [o]utgoing [c]alls (Telescope)",
+        function()
+          require("fzf-lua").lsp_outgoing_calls { jump_to_single_result = true }
+        end,
+        desc = "List [o]utgoing [c]alls (fzf)",
       },
     },
   },
