@@ -32,6 +32,19 @@ return {
           disable = { "gitcommit" },
         },
       }
+
+      local parsers = require("nvim-treesitter.parsers").get_parser_configs()
+      parsers["move"] = {
+        filetype = "move",
+        maintainers = {},
+        install_info = {
+          url = "~/tree-sitter-move",
+          branch = "main",
+          files = { "src/parser.c" },
+          generate_requires_npm = false, -- if stand-alone parser without npm dependencies
+          requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
+        },
+      }
     end,
   },
   {

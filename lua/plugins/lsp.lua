@@ -59,7 +59,18 @@ return {
     },
     config = function()
       local lsp = require "lspconfig"
+      local configs = require "lspconfig.configs"
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+      if not configs.move then
+        configs.move = {
+          default_config = {
+            cmd = { "move-analyzer" },
+            filetypes = { "move" },
+            root_dir = lsp.util.root_pattern "Move.toml",
+          },
+        }
+      end
 
       lsp.lua_ls.setup {
         capabilities = capabilities,
@@ -110,6 +121,10 @@ return {
       }
 
       lsp.tsserver.setup {
+        capabilities = capabilities,
+      }
+
+      lsp.move.setup {
         capabilities = capabilities,
       }
     end,

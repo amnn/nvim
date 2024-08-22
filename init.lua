@@ -93,9 +93,5 @@ require "config.lazy"
 -- DAP
 -- TODO Rust: Code LLDB + DAP UI (+ VSCode Icon font)
 
--- Move
--- TODO Tree Sitter
--- TODO Move Analyzer
-
 -- TODO Investigate issue with nvim taking a while to close:
 -- nvim -V10vim.log will offer debug of what is going on.
