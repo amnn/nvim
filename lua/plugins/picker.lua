@@ -250,6 +250,9 @@ return {
           return name ~= ".." and vim.startswith(name, ".")
         end,
       },
+      win_options = {
+        winbar = "%{v:lua.require('oil').get_current_dir()}",
+      },
     },
     dependencies = { "nvim-tree/nvim-web-devicons" },
     lazy = false,
