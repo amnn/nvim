@@ -11,12 +11,6 @@ return {
     end,
   },
   {
-    "folke/trouble.nvim",
-    version = "*",
-    opts = {},
-    cmd = "Trouble",
-  },
-  {
     "folke/which-key.nvim",
     version = "*",
     event = "VeryLazy",
@@ -34,7 +28,6 @@ return {
     version = "*",
     dependencies = {
       "ahmedkhalf/project.nvim",
-      "folke/trouble.nvim",
       "nvim-lua/plenary.nvim",
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       { "nvim-telescope/telescope-ui-select.nvim" },
@@ -45,25 +38,9 @@ return {
       local actions = require "telescope.actions"
       local grep_actions = require "telescope-live-grep-args.actions"
       local telescope = require "telescope"
-      local trouble = require "trouble.sources.telescope"
 
       telescope.setup {
-        defaults = vim.tbl_deep_extend(
-          "force",
-          require("telescope.themes").get_ivy(),
-          {
-            mappings = {
-              i = {
-                ["<C-t>"] = trouble.open,
-                ["<C-a>"] = trouble.add,
-              },
-              n = {
-                ["<C-t>"] = trouble.open,
-                ["<C-a>"] = trouble.add,
-              },
-            },
-          }
-        ),
+        defaults = require("telescope.themes").get_ivy(),
 
         extensions = {
           live_grep_args = {
