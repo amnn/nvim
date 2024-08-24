@@ -84,11 +84,6 @@ require "config.lazy"
 
 -- FIXME fzf live grep hangs on <C-c> -- fixed by neovim/neovim#30056
 
--- Projects Keybindings
--- TODO Open Project
--- TODO Search (ripgrep) in project root
--- TODO Open Fugitive Status
-
 -- DAP
 -- TODO Rust: Code LLDB + DAP UI (+ VSCode Icon font)
 

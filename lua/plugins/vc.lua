@@ -19,7 +19,7 @@ return {
     dependencies = {
       "tpope/vim-rhubarb",
     },
-    cmds = { "G", "Git" },
+    lazy = false,
     keys = {
       {
         "<leader>v",

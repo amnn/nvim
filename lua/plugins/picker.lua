@@ -24,73 +24,6 @@ return {
     },
   },
   {
-    "nvim-telescope/telescope.nvim",
-    version = "*",
-    dependencies = {
-      "ahmedkhalf/project.nvim",
-      "nvim-lua/plenary.nvim",
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      { "nvim-telescope/telescope-ui-select.nvim" },
-      { "nvim-telescope/telescope-live-grep-args.nvim" },
-    },
-
-    config = function()
-      local actions = require "telescope.actions"
-      local grep_actions = require "telescope-live-grep-args.actions"
-      local telescope = require "telescope"
-
-      telescope.setup {
-        defaults = require("telescope.themes").get_ivy(),
-
-        extensions = {
-          live_grep_args = {
-            mappings = {
-              i = {
-                ["<C-k>"] = grep_actions.quote_prompt(),
-                ["<C-space>"] = actions.to_fuzzy_refine,
-              },
-            },
-          },
-          projects = {
-            mappings = {
-              i = {
-                -- ["<C-v>"] = Open VC
-                -- ["<C-g>"] = Live Grep with args
-              },
-              n = {
-                -- ["v"] = Open VC
-                -- ["g"] = Live Grep with args
-              },
-            },
-          },
-        },
-      }
-
-      telescope.load_extension "fzf"
-      telescope.load_extension "live_grep_args"
-      telescope.load_extension "projects"
-      telescope.load_extension "ui-select"
-    end,
-
-    keys = {
-      {
-        "<leader>p",
-        -- Projects lazy loads the list of projects on setup, so we make sure
-        -- this package is not loaded lazily, and we set-up its keybinding in
-        -- telescope instead.
-        function() require("telescope").extensions.projects.projects {} end,
-        desc = "Choose [p]roject (Telescope/Projects)",
-      },
-      {
-        "<leader>P",
-        -- Duplicate of above keybinding, because I'm very used to using the
-        -- capital letter version.
-        function() require("telescope").extensions.projects.projects {} end,
-        desc = "Choose [P]roject (Telescope/Projects)",
-      },
-    },
-  },
-  {
     "ibhagwan/fzf-lua",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
@@ -129,6 +62,82 @@ return {
         desc = "Resume rip[g]rep (fzf)",
       },
       {
+        "<leader>k",
+        function() require("fzf-lua").keymaps() end,
+        desc = "List [k]eymaps (fzf)",
+      },
+      {
+        "<leader>p",
+        function()
+          local fzf = require "fzf-lua"
+          local history = require "project_nvim.utils.history"
+
+          -- Use a function for contents, so that after deletion, the recent
+          -- projects are loaded fresh.
+          local function fzf_recent_projects(yield)
+            local projects = history.get_recent_projects()
+            for i = #projects, 1, -1 do
+              yield(fzf.path.HOME_to_tilde(projects[i]))
+            end
+            yield()
+          end
+
+          local opts = {
+            header_separator = " | ",
+            fzf_opts = {
+              ["--multi"] = true,
+              ["--prompt"] = "Projects> ",
+            },
+            actions = {
+              ["default"] = function(ps) fzf.files { cwd = ps[1] } end,
+              ["ctrl-g"] = {
+                fn = function(ps) fzf.live_grep_glob { cwd = ps[1] } end,
+                header = "Grep",
+              },
+              ["ctrl-v"] = {
+                fn = function(ps)
+                  vim.cmd.cd(ps[1])
+                  vim.cmd [[tab G]]
+                end,
+                header = "Open VC",
+              },
+              ["ctrl-x"] = {
+                function(ps)
+                  local choice = vim.fn.confirm(
+                    "Delete " .. #ps .. " project(s)?",
+                    "&Yes\n&No",
+                    2
+                  )
+
+                  if choice == 2 then return end
+
+                  for _, project in ipairs(ps) do
+                    history.delete_project {
+                      value = project:gsub("~", vim.env.HOME),
+                    }
+
+                    -- Deleting multiple projects at a time doesn't work
+                    -- because deleting a project causes holes in the
+                    -- `recent_projects` list, so after each deletion, we save
+                    -- and restore from the file.
+                    history.write_projects_to_history()
+                    history.read_projects_from_history()
+                  end
+                end,
+                fzf.actions.resume,
+                header = "Delete project(s)",
+              },
+            },
+          }
+
+          opts = fzf.config.normalize_opts(opts, {})
+          opts = fzf.core.set_header(opts, { "actions" })
+
+          fzf.fzf_exec(fzf_recent_projects, opts)
+        end,
+        desc = "Open [p]roject (fzf)",
+      },
+      {
         "<leader>s",
         function() require("fzf-lua").blines() end,
         desc = "[S]earch lines in buffer (fzf)",
@@ -137,11 +146,6 @@ return {
         "<leader>x",
         function() require("fzf-lua").commands() end,
         desc = "Commands to e[x]ecute (fzf)",
-      },
-      {
-        "<leader>k",
-        function() require("fzf-lua").keymaps() end,
-        desc = "List [k]eymaps (fzf)",
       },
       {
         "ge",
