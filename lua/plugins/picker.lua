@@ -96,8 +96,8 @@ return {
               },
               ["ctrl-v"] = {
                 fn = function(ps)
-                  vim.cmd.cd(ps[1])
-                  vim.cmd [[tab G]]
+                  vim.cmd.tabedit(ps[1])
+                  vim.cmd.G()
                 end,
                 header = "Open VC",
               },
