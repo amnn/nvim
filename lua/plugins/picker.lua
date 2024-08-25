@@ -29,6 +29,7 @@ return {
     opts = {
       winopts = {
         width = 0.6,
+        backdrop = 100,
         preview = {
           layout = "flex",
           flip_columns = 200,
