@@ -119,7 +119,9 @@ return {
         end,
 
         settings = {
-          Lua = {},
+          Lua = {
+            hint = { enable = true },
+          },
         },
       }
 
@@ -129,10 +131,39 @@ return {
 
       lsp.clangd.setup {
         capabilities = capabilities,
+        settings = {
+          clangd = {
+            InlayHints = {
+              Enabled = true,
+              Designators = true,
+              ParameterNames = true,
+              DeducedTypes = true,
+            },
+          },
+        },
+      }
+
+      local ts_hints = {
+        includeInlayParameterNameHints = "all",
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
       }
 
       lsp.tsserver.setup {
         capabilities = capabilities,
+        settings = {
+          typescript = {
+            inlayHints = ts_hints,
+          },
+          javascript = {
+            inlayHints = ts_hints,
+          },
+        },
       }
 
       lsp.move.setup {
