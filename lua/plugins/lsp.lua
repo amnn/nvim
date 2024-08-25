@@ -141,6 +141,51 @@ return {
     end,
   },
   {
+    "nvim-neotest/neotest",
+    version = "*",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "rouge8/neotest-rust",
+    },
+    config = function()
+      require("neotest").setup {
+        adapters = {
+          require "neotest-rust" {
+            dap_adapter = "codelldb",
+          },
+        },
+      }
+    end,
+    keys = {
+      {
+        "<leader>cc",
+        function() require("neotest").run.run(vim.fn.expand "%") end,
+        desc = "[C]heck [c]urrent file (neotest)",
+      },
+      {
+        "<leader>cd",
+        function() require("neotest").run.run { strategy = "dap" } end,
+        desc = "[C]heck nearest test: [d]ebug (neotest)",
+      },
+      {
+        "<leader>cr",
+        function() require("neotest").run.run() end,
+        desc = "[C]heck nearest est: [r]un (neotest)",
+      },
+      {
+        "<leader>cu",
+        function() require("neotest").run.stop() end,
+        desc = "Stop the nearest test (neotest)",
+      },
+      {
+        "<leader>cs",
+        function() require("neotest").summary.toggle() end,
+        desc = "[C]heck [s]ummary (neotest)",
+      },
+    },
+  },
+  {
     "petertriho/cmp-git",
     version = "*",
     opts = {},
