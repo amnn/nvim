@@ -21,6 +21,11 @@ return {
           expand = function(args) vim.snippet.expand(args.body) end,
         },
 
+        window = {
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
+        },
+
         mapping = cmp.mapping.preset.insert(),
 
         sources = cmp.config.sources({
@@ -71,6 +76,12 @@ return {
           },
         }
       end
+
+      -- Render a border around the floating window that shows docs.
+      vim.lsp.handlers["textDocument/hover"] =
+        vim.lsp.with(vim.lsp.handlers.hover, {
+          border = "rounded",
+        })
 
       lsp.lua_ls.setup {
         capabilities = capabilities,
