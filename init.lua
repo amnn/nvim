@@ -84,9 +84,6 @@ require "config.lazy"
 
 -- FIXME fzf live grep hangs on <C-c> -- fixed by neovim/neovim#30056
 
--- DAP
--- TODO Rust: Code LLDB + DAP UI (+ VSCode Icon font)
-
 -- TODO Investigate issue with nvim taking a while to close:
 -- nvim -V10vim.log will offer debug of what is going on.
 

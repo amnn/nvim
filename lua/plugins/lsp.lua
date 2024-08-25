@@ -228,6 +228,84 @@ return {
       "mfussenegger/nvim-dap",
       "nvim-neotest/nvim-nio",
     },
+    lazy = false,
+    config = function()
+      local dap = require "dap"
+      local ui = require "dapui"
+      local registry = require "mason-registry"
+
+      ui.setup()
+
+      dap.adapters.codelldb = {
+        type = "server",
+        port = "${port}",
+        executable = {
+          command = registry.get_package("codelldb"):get_install_path()
+            .. "/codelldb",
+          args = { "--port", "${port}" },
+        },
+      }
+
+      dap.configurations.rust = {
+        {
+          name = "Rust: Launch",
+          type = "codelldb",
+          request = "launch",
+          program = function()
+            return vim.fn.input(
+              "Path to executable: ",
+              vim.fn.getcwd() .. "/target/debug/",
+              "file"
+            )
+          end,
+          cwd = "${workspaceFolder}",
+          stopOnEntry = true,
+        },
+      }
+
+      -- Automatically start/stop the UI when debugging starts
+      dap.listeners.before.attach.dapui_config = function() ui.open() end
+      dap.listeners.before.launch.dapui_config = function() ui.open() end
+      dap.listeners.before.event_terminated.dapui_config = function() ui.close() end
+      dap.listeners.before.event_exited.dapui_config = function() ui.close() end
+    end,
+    keys = {
+      {
+        "<leader>db",
+        function() require("dap").toggle_breakpoint() end,
+        desc = "[D]ebug toggle [b]reakpoint (DAP)",
+      },
+      {
+        "<leader>dc",
+        function() require("dap").continue() end,
+        desc = "[D]ebug [c]ontinue (DAP)",
+      },
+      {
+        "<leader>de",
+        function() require("dapui").eval(nil, { enter = true }) end,
+        desc = "[D]ebug [e]val (DAP)",
+      },
+      {
+        "<leader>di",
+        function() require("dap").step_into() end,
+        desc = "[D]ebug step [i]nto (DAP)",
+      },
+      {
+        "<leader>do",
+        function() require("dap").step_over() end,
+        desc = "[D]ebug step [o]ver (DAP)",
+      },
+      {
+        "<leader>dO",
+        function() require("dap").step_out() end,
+        desc = "[D]ebug step [o]ut (DAP)",
+      },
+      {
+        "<leader>dr",
+        function() require("dap").run_to_cursor() end,
+        desc = "[D]ebug [r]un to cursor (DAP)",
+      },
+    },
   },
   {
     "stevearc/conform.nvim",
@@ -254,6 +332,13 @@ return {
           stdin = false,
         },
       },
+    },
+  },
+  {
+    "theHamsta/nvim-dap-virtual-text",
+    version = "*",
+    opts = {
+      virt_text_pos = "eol",
     },
   },
   {
