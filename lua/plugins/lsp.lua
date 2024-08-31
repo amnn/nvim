@@ -159,7 +159,7 @@ return {
       vim.api.nvim_create_autocmd("CursorHold", {
         group = show_hints_group,
         desc = "Show the inlay hints for the current line",
-        callback = function(ctx)
+        callback = function(_)
           local line = vim.api.nvim_win_get_cursor(0)[1]
 
           local hints = vim.b.inlay_hints
