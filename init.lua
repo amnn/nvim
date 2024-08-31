@@ -32,6 +32,9 @@ vim.opt.scrolloff = 5
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
+-- Cursor Hold
+vim.opt.updatetime = 1500
+
 -- Basic Keybinds
 local map = vim.keymap.set
 
@@ -86,5 +89,3 @@ require "config.lazy"
 
 -- TODO Investigate issue with nvim taking a while to close:
 -- nvim -V10vim.log will offer debug of what is going on.
-
--- TODO Custom inlay hints -- echo for current line.

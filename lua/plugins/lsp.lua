@@ -83,6 +83,100 @@ return {
           border = "rounded",
         })
 
+      -- https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_inlayHint
+      vim.lsp.handlers["textDocument/inlayHint"] = function(err, res, ctx, _)
+        if not res then return end
+
+        local buf = ctx.bufnr or -1
+        if not vim.api.nvim_buf_is_valid(buf) then return end
+
+        local client = vim.lsp.get_client_by_id(ctx.client_id)
+        if not client then return end
+        if not client.server_capabilities.inlayHintProvider then return end
+
+        if err then
+          vim.notify(
+            "Inlay Hints Error: " .. vim.inspect(err),
+            vim.log.levels.ERROR
+          )
+          return
+        end
+
+        -- Sort the results by character position so that when we gather them
+        -- up into lines, we process hints in the order they should appear in
+        -- the line.
+        table.sort(
+          res,
+          function(a, b) return a.position.character < b.position.character end
+        )
+
+        local hints = {}
+        for _, hint in ipairs(res) do
+          local label = hint.label
+          if type(label) ~= "string" then
+            -- If the label is an InlayHintLabelPart[], gather all the labels within it.
+            label = vim
+              .iter(label)
+              :map(function(part) return part.value end)
+              :join ""
+          end
+
+          -- If this is a type hint and the label begins with a colon, try to
+          -- find the variable that this type corresponds to, using treesitter.
+          if hint.kind == 1 and label:match "^: " then
+            local node = vim.treesitter.get_node {
+              bufnr = buf,
+              pos = {
+                hint.position.line,
+                hint.position.character - 1,
+              },
+            }
+
+            if node then
+              label = vim.treesitter.get_node_text(node, buf, {}) .. label
+            end
+          end
+
+          local line = hint.position.line
+          if not hints[line] then hints[line] = {} end
+          table.insert(hints[line], label)
+        end
+
+        -- Join together the hints in a line
+        local lines = {}
+        for i, hint in pairs(hints) do
+          lines[i] = table.concat(hint, " | ")
+        end
+
+        -- Set the new hints -- we build them up first and then set them in one
+        -- go to prevent the UI from displaying incomplete information.
+        vim.b[buf].inlay_hints = lines
+      end
+
+      local show_hints_group =
+        vim.api.nvim_create_augroup("ShowInlayHints", { clear = true })
+
+      vim.api.nvim_create_autocmd("CursorHold", {
+        group = show_hints_group,
+        desc = "Show the inlay hints for the current line",
+        callback = function(ctx)
+          local line = vim.api.nvim_win_get_cursor(0)[1]
+
+          local hints = vim.b.inlay_hints
+          if not hints then return end
+
+          -- We need to check for `vim.NIL` instead of using `not hint` because
+          -- this value is coming from a vim buffer-local variable, so it will
+          -- be deserialized.
+          --
+          -- If the current line has no hints, explicitly clear the echo area.
+          local hint = hints[line - 1]
+          if hint == vim.NIL then hint = "" end
+
+          vim.api.nvim_echo({ { hint, "Type" } }, false, {})
+        end,
+      })
+
       lsp.lua_ls.setup {
         capabilities = capabilities,
 
