@@ -143,19 +143,15 @@ return {
           end
 
           local line = hint.position.line + 1
-          if not hints[line] then hints[line] = {} end
-          table.insert(hints[line], label)
-        end
+          local token = { label = label, position = hint.position.character }
 
-        -- Join together the hints in a line
-        local lines = {}
-        for i, hint in pairs(hints) do
-          lines[i] = table.concat(hint, " | ")
+          if not hints[line] then hints[line] = {} end
+          table.insert(hints[line], token)
         end
 
         -- Set the new hints -- we build them up first and then set them in one
         -- go to prevent the UI from displaying incomplete information.
-        vim.b[buf].inlay_hints = lines
+        vim.b[buf].inlay_hints = hints
       end
 
       local show_hints_group =
@@ -165,20 +161,39 @@ return {
         group = show_hints_group,
         desc = "Show the inlay hints for the current line",
         callback = function(_)
-          local line = vim.api.nvim_win_get_cursor(0)[1]
+          local pos = vim.api.nvim_win_get_cursor(0)
+          local line = pos[1]
+          local col = pos[2]
 
           local hints = vim.b.inlay_hints
           if not hints then return end
 
-          -- We need to check for `vim.NIL` instead of using `not hint` because
-          -- this value is coming from a vim buffer-local variable, so it will
-          -- be deserialized.
-          --
           -- If the current line has no hints, explicitly clear the echo area.
           local hint = hints[line]
-          if hint == nil or hint == vim.NIL then hint = "" end
+          if hint == nil or hint == vim.NIL or #hint == 0 then
+            vim.api.nvim_echo({}, false, {})
+            return
+          end
 
-          vim.api.nvim_echo({ { hint, "Type" } }, false, {})
+          local last = 0
+          local tokens = {}
+          local prefix = "["
+
+          for _, token in ipairs(hint) do
+            local at_cursor = last <= col and col < token.position
+            local highlight = at_cursor and "Cursor" or "Normal"
+            table.insert(tokens, { prefix, highlight })
+            table.insert(tokens, { " ", "Normal" })
+            table.insert(tokens, { token.label, "Type" })
+            table.insert(tokens, { " ", "Normal" })
+
+            last = token.position
+            prefix = "|"
+          end
+
+          local highlight = last <= col and "Cursor" or "Normal"
+          table.insert(tokens, { "]", highlight })
+          vim.api.nvim_echo(tokens, false, {})
         end,
       })
 
