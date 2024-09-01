@@ -66,11 +66,6 @@ return {
       local lsp = require "lspconfig"
       local configs = require "lspconfig.configs"
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
-      local on_attach = function(client, buf)
-        if client.server_capabilities.inlayHintProvider then
-          vim.lsp.inlay_hint.enable(true, { bufnr = buf })
-        end
-      end
 
       if not configs.move then
         configs.move = {
@@ -205,9 +200,22 @@ return {
         end,
       })
 
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = show_hints_group,
+        desc = "Enable inlay hints if the server supports them",
+        callback = function(ctx)
+          local client = ctx.data.client_id
+            and vim.lsp.get_client_by_id(ctx.data.client_id)
+          if not client then return end
+
+          if client.server_capabilities.inlayHintProvider then
+            vim.lsp.inlay_hint.enable(true, { bufnr = ctx.buf })
+          end
+        end,
+      })
+
       lsp.lua_ls.setup {
         capabilities = capabilities,
-        on_attach = on_attach,
         on_init = function(client)
           local path = client.workspace_folders[1].name
 
@@ -249,12 +257,11 @@ return {
 
       lsp.rust_analyzer.setup {
         capabilities = capabilities,
-        on_attach = on_attach,
       }
 
       lsp.clangd.setup {
         capabilities = capabilities,
-        on_attach = on_attach,
+
         settings = {
           clangd = {
             InlayHints = {
@@ -280,7 +287,6 @@ return {
 
       lsp.tsserver.setup {
         capabilities = capabilities,
-        on_attach = on_attach,
         settings = {
           typescript = {
             inlayHints = ts_hints,
