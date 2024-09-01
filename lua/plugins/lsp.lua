@@ -126,9 +126,15 @@ return {
               :join ""
           end
 
-          -- If this is a type hint and the label begins with a colon, try to
-          -- find the variable that this type corresponds to, using treesitter.
-          if hint.kind == 1 and label:match "^: " then
+          -- Some language servers (e.g. Rust Analyzer) return hints with
+          -- colons to represent type annotations (leading colon), or parameter
+          -- names (trailing colon). Remove them, because we are not displaying
+          -- the hint inline.
+          label = vim.trim(label:gsub("^:", ""):gsub(":$", ""))
+
+          -- If this is a type hint, try to find the variable that this type
+          -- corresponds to, using treesitter.
+          if hint.kind == 1 then
             local node = vim.treesitter.get_node {
               bufnr = buf,
               pos = {
@@ -138,7 +144,9 @@ return {
             }
 
             if node then
-              label = vim.treesitter.get_node_text(node, buf, {}) .. label
+              label = vim.treesitter.get_node_text(node, buf, {})
+                .. ": "
+                .. label
             end
           end
 
