@@ -66,6 +66,11 @@ return {
       local lsp = require "lspconfig"
       local configs = require "lspconfig.configs"
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      local on_attach = function(client, buf)
+        if client.server_capabilities.inlayHintProvider then
+          vim.lsp.inlay_hint.enable(true, { bufnr = buf })
+        end
+      end
 
       if not configs.move then
         configs.move = {
@@ -137,7 +142,7 @@ return {
             end
           end
 
-          local line = hint.position.line
+          local line = hint.position.line + 1
           if not hints[line] then hints[line] = {} end
           table.insert(hints[line], label)
         end
@@ -170,8 +175,8 @@ return {
           -- be deserialized.
           --
           -- If the current line has no hints, explicitly clear the echo area.
-          local hint = hints[line - 1]
-          if hint == vim.NIL then hint = "" end
+          local hint = hints[line]
+          if hint == nil or hint == vim.NIL then hint = "" end
 
           vim.api.nvim_echo({ { hint, "Type" } }, false, {})
         end,
@@ -179,7 +184,7 @@ return {
 
       lsp.lua_ls.setup {
         capabilities = capabilities,
-
+        on_attach = on_attach,
         on_init = function(client)
           local path = client.workspace_folders[1].name
 
@@ -221,10 +226,12 @@ return {
 
       lsp.rust_analyzer.setup {
         capabilities = capabilities,
+        on_attach = on_attach,
       }
 
       lsp.clangd.setup {
         capabilities = capabilities,
+        on_attach = on_attach,
         settings = {
           clangd = {
             InlayHints = {
@@ -250,6 +257,7 @@ return {
 
       lsp.tsserver.setup {
         capabilities = capabilities,
+        on_attach = on_attach,
         settings = {
           typescript = {
             inlayHints = ts_hints,
