@@ -95,10 +95,6 @@ return {
     },
   },
   {
-    "gabrielpoca/replacer.nvim",
-    version = "*",
-  },
-  {
     "kylechui/nvim-surround",
     version = "*",
     event = "VeryLazy",
