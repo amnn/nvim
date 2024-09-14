@@ -30,34 +30,39 @@ map(
   "n",
   "bc",
   prep "branch %h<C-b><C-right><C-right> ",
-  { buffer = true, desc = "[C]reate [b]ranch" }
+  { buffer = true, desc = "[C]reate [b]ranch (Floggraph)" }
 )
 
 map(
   "n",
   "bd",
   prep "branch -d %b",
-  { buffer = true, desc = "[D]elete [b]ranch" }
+  { buffer = true, desc = "[D]elete [b]ranch (Floggraph)" }
 )
 
 map(
   "n",
   "bD",
   prep "branch -D %b",
-  { buffer = true, desc = "Force [d]elete [b]ranch" }
+  { buffer = true, desc = "Force [d]elete [b]ranch (Floggraph)" }
 )
 
 map(
   "n",
   "bu",
   prep "update-ref refs/heads/",
-  { buffer = true, desc = "[U]pdate [b]ranch" }
+  { buffer = true, desc = "[U]pdate [b]ranch (Floggraph)" }
 )
 
-map("n", "p", exec "push origin %b", { buffer = true, desc = "[P]ush" })
+map(
+  "n",
+  "p",
+  exec "push origin %b",
+  { buffer = true, desc = "[P]ush (Floggraph)" }
+)
 map(
   "n",
   "P",
   exec "push --force-with-lease origin %b",
-  { buffer = true, desc = "Force [p]ush" }
+  { buffer = true, desc = "Force [p]ush (Floggraph)" }
 )
