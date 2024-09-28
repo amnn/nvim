@@ -62,7 +62,6 @@ return {
   },
   {
     "lewis6991/gitsigns.nvim",
-    version = "*",
     opts = {},
     lazy = false,
     init = function()
