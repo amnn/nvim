@@ -5,7 +5,7 @@ return {
     events = { "VeryLazy" },
     config = function()
       require("project_nvim").setup {
-        detection_methods = { "lsp", "pattern" },
+        detection_methods = { "pattern" },
         patterns = { ".git", ".hg", ".project", "Move.toml", "init.lua" },
       }
     end,
