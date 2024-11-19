@@ -1,3 +1,13 @@
+vim.api.nvim_create_user_command("Scratch", function()
+  if pcall(vim.cmd, [[b scratch]]) then return end
+
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_name(buf, "scratch")
+  vim.api.nvim_set_option_value("buftype", "nofile", { buf = buf })
+  vim.api.nvim_set_option_value("filetype", "clojure", { buf = buf })
+  vim.api.nvim_set_current_buf(buf)
+end, { desc = "Open a new [Scratch] buffer." })
+
 return {
   {
     "PaterJason/cmp-conjure",
