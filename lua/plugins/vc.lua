@@ -8,7 +8,9 @@ vim.api.nvim_create_user_command(
 
 vim.api.nvim_create_user_command(
   "Feat",
-  function() vim.cmd [[Flog -- --branches ^origin/main]] end,
+  function()
+    vim.cmd [[Flog -order=author -- --boundary --branches ^origin/main]]
+  end,
   { desc = "Show [Feat]ure branches (Flog)" }
 )
 
