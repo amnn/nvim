@@ -13,7 +13,6 @@
   "fzf-lua": { "branch": "main", "commit": "def1d778de3ca4f3933a292fd56ec3cfea1325e8" },
   "git-conflict.nvim": { "branch": "main", "commit": "4bbfdd92d547d2862a75b4e80afaf30e73f7bbb4" },
   "gitsigns.nvim": { "branch": "main", "commit": "ac5aba6dce8c06ea22bea2c9016f51a2dbf90dc7" },
-  "gp.nvim": { "branch": "main", "commit": "e6a01e9788dbc7c09df6ffe47b6d15d1cb455de8" },
   "lazy.nvim": { "branch": "main", "commit": "7967abe55752aa90532e6bb4bd4663fe27a264cb" },
   "lsp-echohint.nvim": { "branch": "main", "commit": "650b3920b9ede5ea002a08661d00501e4d305766" },
   "lualine.nvim": { "branch": "master", "commit": "2a5bae925481f999263d6f5ed8361baef8df4f83" },
