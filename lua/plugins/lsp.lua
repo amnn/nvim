@@ -69,7 +69,19 @@ return {
     config = function()
       local lsp = require "lspconfig"
       local configs = require "lspconfig.configs"
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      local capabilities = vim.tbl_deep_extend(
+        "force",
+        require("cmp_nvim_lsp").default_capabilities(),
+        {
+          workspace = {
+            didChangeWatchedFiles = {
+              -- Disable workspace/didChangeWatchedFiles. It causes issues in
+              -- large projects, where the file watcher opens too many files.
+              dynamicRegistration = false,
+            },
+          },
+        }
+      )
 
       if not configs.move then
         configs.move = {
