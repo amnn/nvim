@@ -114,17 +114,4 @@ return {
       },
     },
   },
-  {
-    "OXY2DEV/markview.nvim",
-    lazy = false,
-    opts = {
-      filetypes = { "markdown", "Avante" },
-      buf_ignore = {},
-      max_length = 99999,
-      hybrid_modes = { "n" },
-      list_items = {
-        enable = false,
-      },
-    },
-  },
 }
