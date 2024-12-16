@@ -99,6 +99,10 @@ return {
           border = "rounded",
         })
 
+      lsp.gopls.setup {
+        capabilities = capabilities,
+      }
+
       lsp.lua_ls.setup {
         capabilities = capabilities,
         on_init = function(client)
@@ -331,6 +335,7 @@ return {
         c = { "clang-format" },
         cpp = { "clang-format" },
         clojure = { "cljfmt" },
+        go = { "gofmt" },
         javascript = { "prettier" },
         lua = { "stylua" },
         move = { "prettier-move" },
