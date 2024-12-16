@@ -99,6 +99,19 @@ return {
           border = "rounded",
         })
 
+      -- Ignore server-cancelled diagnostics, which rust-analyzer produces and
+      -- neovim doesn't know how to handle (yet).
+      for _, method in ipairs {
+        "textDocument/diagnostic",
+        "workspace/diagnostic",
+      } do
+        local default_handler = vim.lsp.handlers[method]
+        vim.lsp.handlers[method] = function(err, res, ctx, cfg)
+          if err ~= nil and err.code == -32802 then return end
+          return default_handler(err, res, ctx, cfg)
+        end
+      end
+
       lsp.gopls.setup {
         capabilities = capabilities,
       }
