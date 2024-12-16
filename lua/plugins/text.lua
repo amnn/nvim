@@ -110,7 +110,13 @@ return {
       },
       options = {
         pair_spaces = true,
-        disabled_filetypes = { "gitcommit", "markdown", "text" },
+        disabled_filetypes = {
+          "gitcommit",
+          "markdown",
+          "text",
+          "typescript",
+          "typescriptreact",
+        },
       },
     },
   },
