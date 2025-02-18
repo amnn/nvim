@@ -202,6 +202,10 @@ return {
       lsp.move.setup {
         capabilities = capabilities,
       }
+
+      lsp.zls.setup {
+        capabilities = capabilities,
+      }
     end,
   },
   {
