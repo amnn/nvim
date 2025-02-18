@@ -175,44 +175,32 @@ return {
       },
       {
         "gi",
-        function()
-          require("fzf-lua").lsp_implementations { jump_to_single_result = true }
-        end,
+        function() require("fzf-lua").lsp_implementations { jump1 = true } end,
         desc = "List [i]mplementations (fzf)",
       },
       {
         "gd",
-        function()
-          require("fzf-lua").lsp_definitions { jump_to_single_result = true }
-        end,
+        function() require("fzf-lua").lsp_definitions { jump1 = true } end,
         desc = "List [d]efinitions (fzf)",
       },
       {
         "gr",
-        function()
-          require("fzf-lua").lsp_references { jump_to_single_result = true }
-        end,
+        function() require("fzf-lua").lsp_references { jump1 = true } end,
         desc = "List [r]eferences (fzf)",
       },
       {
         "gy",
-        function()
-          require("fzf-lua").lsp_typedefs { jump_to_single_result = true }
-        end,
+        function() require("fzf-lua").lsp_typedefs { jump1 = true } end,
         desc = "List t[y]pe definitions (fzf)",
       },
       {
         "gCi",
-        function()
-          require("fzf-lua").lsp_incoming_calls { jump_to_single_result = true }
-        end,
+        function() require("fzf-lua").lsp_incoming_calls { jump1 = true } end,
         desc = "List [i]ncoming [c]alls (fzf)",
       },
       {
         "gCo",
-        function()
-          require("fzf-lua").lsp_outgoing_calls { jump_to_single_result = true }
-        end,
+        function() require("fzf-lua").lsp_outgoing_calls { jump1 = true } end,
         desc = "List [o]utgoing [c]alls (fzf)",
       },
     },
