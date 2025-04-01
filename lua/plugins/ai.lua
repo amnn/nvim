@@ -33,10 +33,14 @@ return {
       claude = {
         api_key_name = "cmd:op --account my read op://Private/Anthropic/credential",
         endpoint = "https://api.anthropic.com",
-        model = "claude-3-5-sonnet-20241022",
+        model = "claude-3-7-sonnet-20250219",
         timeout = 30000,
         temperature = 0,
         max_tokens = 4096,
+      },
+      behaviour = {
+        enable_cursor_planning_mode = true,
+        enable_claude_text_editor_tool_mode = true,
       },
       mappings = {
         ask = "<C-g>a",
