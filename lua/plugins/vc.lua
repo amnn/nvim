@@ -109,4 +109,8 @@ return {
     },
     cmd = { "Flog", "Flogsplit", "Floggit" },
   },
+  {
+    dir = "~/smartlog.nvim",
+    opts = {},
+  },
 }
