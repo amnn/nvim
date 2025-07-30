@@ -35,6 +35,9 @@ vim.opt.splitright = true
 -- Cursor Hold
 vim.opt.updatetime = 1500
 
+-- Floating Windows
+vim.opt.winborder = "rounded"
+
 -- Basic Keybinds
 local map = vim.keymap.set
 

@@ -93,12 +93,6 @@ return {
         }
       end
 
-      -- Render a border around the floating window that shows docs.
-      vim.lsp.handlers["textDocument/hover"] =
-        vim.lsp.with(vim.lsp.handlers.hover, {
-          border = "rounded",
-        })
-
       -- Ignore server-cancelled diagnostics, which rust-analyzer produces and
       -- neovim doesn't know how to handle (yet).
       for _, method in ipairs {
