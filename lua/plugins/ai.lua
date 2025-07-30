@@ -1,3 +1,31 @@
+-- Keybindings for copying file paths and regions to clipboard
+vim.keymap.set("n", "<leader>yf", function()
+  local filepath = vim.fn.expand "%:p"
+  vim.fn.setreg("+", filepath)
+  print("Copied file path: " .. filepath)
+end, { desc = "[Y]ank [f]ile path" })
+
+vim.keymap.set("n", "<leader>yl", function()
+  local filepath = vim.fn.expand "%:p"
+  local line = vim.fn.line "."
+  local result = filepath .. ":" .. line
+  vim.fn.setreg("+", result)
+  print("Copied file:line: " .. result)
+end, { desc = "[Y]ank file path with [l]ine number" })
+
+vim.keymap.set("v", "<leader>yl", function()
+  -- Exit visual mode first to ensure marks are set
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+  vim.schedule(function()
+    local filepath = vim.fn.expand "%:p"
+    local start_line = vim.fn.line "'<"
+    local end_line = vim.fn.line "'>"
+    local result = filepath .. ":" .. start_line .. "-" .. end_line
+    vim.fn.setreg("+", result)
+    print("Copied file:region: " .. result)
+  end)
+end, { desc = "[Y]ank file path with [l]ine range" })
+
 return {
   {
     "github/copilot.vim",
@@ -16,70 +44,27 @@ return {
     },
   },
   {
-    "olimorris/codecompanion.nvim",
-    keys = {
-      {
-        "<C-a>",
-        [[<CMD>CodeCompanionActions<CR>]],
-        mode = { "n", "v" },
-        noremap = true,
-        silent = true,
-        desc = "Open the [A]ction Palette (CodeCompanion)",
-      },
-      {
-        "<LocalLeader>a",
-        [[<CMD>CodeCompanionChat Toggle<CR>]],
-        mode = { "n", "v" },
-        noremap = true,
-        silent = true,
-        desc = "Toggle [A]I Chat (CodeCompanion)",
-      },
-      {
-        "ga",
-        [[<CMD>CodeCompanionChat Add<CR>]],
-        mode = { "v" },
-        noremap = true,
-        silent = true,
-        desc = "[A]dd selection to Chat (CodeCompanion)",
-      },
-    },
-    init = function()
-      vim.cmd [[cabbrev cc CodeCompanion]]
-      require("plugins.ai.fidget"):init()
-    end,
-    opts = {
-      adapters = {
-        anthropic = function()
-          return require("codecompanion.adapters").extend("anthropic", {
-            env = {
-              api_key = "cmd:op --account my read op://Private/Anthropic/credential --no-newline",
-            },
-            schema = {
-              model = {
-                default = "claude-3-7-sonnet-20250219",
-              },
-            },
-          })
-        end,
-      },
-      strategies = {
-        chat = {
-          adapter = "anthropic",
-        },
-        inline = {
-          adapter = "anthropic",
-        },
-      },
-      display = {
-        action_palette = {
-          width = 95,
-          height = 10,
-        },
-      },
-    },
+    "greggh/claude-code.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
+    },
+    opts = {
+      window = {
+        position = "float",
+        float = {
+          width = "30%",
+          height = "95%",
+          row = 1,
+          col = "70%",
+        },
+
+        keymaps = {
+          toggle = {
+            normal = "<C-,>",
+            terminal = "<C-,>",
+          },
+        },
+      },
     },
   },
 }
