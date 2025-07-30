@@ -269,7 +269,7 @@ return {
     config = function()
       local dap = require "dap"
       local ui = require "dapui"
-      local registry = require "mason-registry"
+      local location = require("mason-core.installer.InstallLocation").global()
 
       ui.setup()
 
@@ -277,8 +277,7 @@ return {
         type = "server",
         port = "${port}",
         executable = {
-          command = registry.get_package("codelldb"):get_install_path()
-            .. "/codelldb",
+          command = location:package "codelldb" .. "/codelldb",
           args = { "--port", "${port}" },
         },
       }
