@@ -46,32 +46,6 @@ return {
   { -- Automatically detect light and dark mode
     "cormacrelf/dark-notify",
     version = "*",
-    dependencies = {
-      -- Necessary to run the command to talk to kitty shell
-      { "nvim-lua/plenary.nvim" },
-    },
-    config = function()
-      require("dark_notify").run {
-        onchange = function(mode)
-          -- Notify Kitty that it should change its color scheme as well.
-          local conf = mode == "dark" and "vivendi" or "operandi"
-          require("plenary.job")
-            :new({
-              command = "kitty",
-              args = {
-                "@",
-                "--to",
-                "unix:/tmp/kitty-pipe",
-                "set-colors",
-                "--all",
-                "--configured",
-                "~/.config/kitty/modus-" .. conf .. ".conf",
-              },
-              enable_handlers = false,
-            })
-            :start()
-        end,
-      }
-    end,
+    config = function() require("dark_notify").run {} end,
   },
 }
