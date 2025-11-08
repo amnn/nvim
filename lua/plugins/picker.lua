@@ -55,7 +55,7 @@ return {
       },
       {
         "<leader>g",
-        function() require("fzf-lua").live_grep_glob() end,
+        function() require("fzf-lua").live_grep() end,
         desc = "Rip[g]rep (fzf)",
       },
       {
@@ -93,7 +93,7 @@ return {
             actions = {
               ["default"] = function(ps) fzf.files { cwd = ps[1] } end,
               ["ctrl-g"] = {
-                fn = function(ps) fzf.live_grep_glob { cwd = ps[1] } end,
+                fn = function(ps) fzf.live_grep { cwd = ps[1] } end,
                 header = "Grep",
               },
               ["ctrl-v"] = {
