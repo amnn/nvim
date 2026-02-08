@@ -42,7 +42,7 @@ return {
         filetype = "move",
         maintainers = {},
         install_info = {
-          url = "~/tree-sitter-move",
+          url = "~/Code/tree-sitter-move/external-crates/move/tooling/tree-sitter",
           branch = "main",
           files = { "src/parser.c" },
           generate_requires_npm = false, -- if stand-alone parser without npm dependencies
