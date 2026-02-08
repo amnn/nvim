@@ -1,35 +1,31 @@
 return {
   { -- Color Scheme
-    "miikanissi/modus-themes.nvim",
-    version = "*",
+    "projekt0n/github-nvim-theme",
+    name = "github-theme",
+    lazy = false,
     priority = 1000,
     config = function()
-      require("modus-themes").setup {
-        on_highlights = function(highlights, colors)
-          highlights.ColorColumn.bg = "NONE"
-          highlights.SignColumn.bg = "NONE"
-          highlights.LineNr.bg = "NONE"
-          highlights.LineNrAbove.bg = "NONE"
-          highlights.LineNrBelow.bg = "NONE"
-          highlights.NormalFloat = { bg = colors.bg_main }
-          highlights.WinSeparator = { bg = "NONE" }
-          highlights.TreesitterContext = { bg = "NONE" }
-        end,
+      require("github-theme").setup {
+        options = {
+          transparent = true,
+        },
+
+        groups = {
+          all = {
+            TreesitterContext = { bg = "bg1" },
+            ["@markup.raw"] = { style = "NONE" },
+          },
+        },
       }
 
-      vim.o.fillchars = "vert: "
-      vim.opt.colorcolumn = vim.fn.range(80, 100)
-
-      vim.cmd [[colorscheme modus]]
+      vim.cmd [[colorscheme github_light]]
     end,
   },
   { -- Status line
     "nvim-lualine/lualine.nvim",
     version = "*",
-    init = function() vim.g.ayuprefermirage = true end,
     opts = {
       options = {
-        theme = "ayu",
         section_separators = "",
         component_separators = "",
       },
@@ -46,6 +42,14 @@ return {
   { -- Automatically detect light and dark mode
     "cormacrelf/dark-notify",
     version = "*",
-    config = function() require("dark_notify").run {} end,
+    config = function()
+      local dn = require "dark_notify"
+      dn.run {
+        schemes = {
+          light = "github_light",
+          dark = "github_dark",
+        },
+      }
+    end,
   },
 }

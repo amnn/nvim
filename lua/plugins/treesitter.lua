@@ -3,10 +3,6 @@ return {
     "nvim-treesitter/nvim-treesitter",
     version = "*",
     lazy = false,
-    dependencies = {
-      -- Needed because markview makes use of treesitter queries
-      "OXY2DEV/markview.nvim",
-    },
     config = function()
       require("nvim-treesitter.configs").setup {
         ensure_installed = {
