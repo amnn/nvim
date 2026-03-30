@@ -67,8 +67,8 @@ return {
       "williamboman/mason-lspconfig.nvim",
     },
     config = function()
-      local lsp = require "lspconfig"
       local configs = require "lspconfig.configs"
+      local util = require "lspconfig.util"
       local capabilities = vim.tbl_deep_extend(
         "force",
         require("cmp_nvim_lsp").default_capabilities(),
@@ -88,16 +88,17 @@ return {
           default_config = {
             cmd = { "move-analyzer" },
             filetypes = { "move" },
-            root_dir = lsp.util.root_pattern "Move.toml",
+            root_dir = util.root_pattern "Move.toml",
           },
         }
       end
 
-      lsp.gopls.setup {
+      vim.lsp.config("gopls", {
         capabilities = capabilities,
-      }
+      })
+      vim.lsp.enable "gopls"
 
-      lsp.lua_ls.setup {
+      vim.lsp.config("lua_ls", {
         capabilities = capabilities,
         on_init = function(client)
           local path = client.workspace_folders[1].name
@@ -136,13 +137,22 @@ return {
             hint = { enable = true },
           },
         },
-      }
+      })
+      vim.lsp.enable "lua_ls"
 
-      lsp.rust_analyzer.setup {
+      vim.lsp.config("rust_analyzer", {
         capabilities = capabilities,
-      }
+        settings = {
+          ["rust-analyzer"] = {
+            cargo = {
+              targetDir = "target/rust-analyzer",
+            },
+          },
+        },
+      })
+      vim.lsp.enable "rust_analyzer"
 
-      lsp.clangd.setup {
+      vim.lsp.config("clangd", {
         capabilities = capabilities,
 
         settings = {
@@ -155,7 +165,8 @@ return {
             },
           },
         },
-      }
+      })
+      vim.lsp.enable "clangd"
 
       local ts_hints = {
         includeInlayParameterNameHints = "all",
@@ -168,7 +179,7 @@ return {
         includeInlayEnumMemberValueHints = true,
       }
 
-      lsp.ts_ls.setup {
+      vim.lsp.config("ts_ls", {
         capabilities = capabilities,
         settings = {
           typescript = {
@@ -178,15 +189,18 @@ return {
             inlayHints = ts_hints,
           },
         },
-      }
+      })
+      vim.lsp.enable "ts_ls"
 
-      lsp.move.setup {
+      vim.lsp.config("move", {
         capabilities = capabilities,
-      }
+      })
+      vim.lsp.enable "move"
 
-      lsp.zls.setup {
+      vim.lsp.config("zls", {
         capabilities = capabilities,
-      }
+      })
+      vim.lsp.enable "zls"
     end,
   },
   {
