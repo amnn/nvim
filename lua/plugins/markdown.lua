@@ -40,12 +40,14 @@ return {
       "3rd/image.nvim",
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
+      "tpope/vim-repeat",
     },
     config = function(_, opts)
       require("render-markdown").setup(opts)
 
       local cycle = { "[ ]", "[/]", "[x]" }
       local pattern = "^(%s*)([^%[%s]+%s+)(%[[^%]]%])(.*)$"
+      local actions_by_buf = {}
 
       local function find_checkbox(buf, cursor)
         local ok, node = pcall(vim.treesitter.get_node, {
@@ -98,19 +100,14 @@ return {
       end
 
       local function dispatch_action()
+        local actions = actions_by_buf[vim.api.nvim_get_current_buf()]
         local action = vim.fn.getcharstr()
 
-        if action == "d" then
-          set_checkbox "[x]"
-        elseif action == "x" then
-          set_checkbox "[-]"
-        elseif action == "w" then
-          set_checkbox "[^]"
-        elseif action == "i" then
-          set_checkbox "[!]"
+        if actions[action] then
+          actions[action]()
         else
           while action == "c" do
-            cycle_checkbox()
+            actions.c()
             action = vim.fn.getcharstr(0)
             if action == "" then return end
           end
@@ -122,6 +119,56 @@ return {
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "markdown",
         callback = function(event)
+          local function register_repeat(plug)
+            vim.fn["repeat#set"](vim.keycode(plug))
+          end
+
+          local actions = {
+            c = function()
+              cycle_checkbox()
+              register_repeat("<Plug>(markdown-checkbox-cycle)")
+            end,
+            d = function()
+              set_checkbox "[x]"
+              register_repeat("<Plug>(markdown-checkbox-done)")
+            end,
+            i = function()
+              set_checkbox "[!]"
+              register_repeat("<Plug>(markdown-checkbox-important)")
+            end,
+            w = function()
+              set_checkbox "[^]"
+              register_repeat("<Plug>(markdown-checkbox-blocked)")
+            end,
+            x = function()
+              set_checkbox "[-]"
+              register_repeat("<Plug>(markdown-checkbox-canceled)")
+            end,
+          }
+
+          actions_by_buf[event.buf] = actions
+
+          vim.keymap.set("n", "<Plug>(markdown-checkbox-cycle)", actions.c, {
+            buffer = event.buf,
+            silent = true,
+          })
+          vim.keymap.set("n", "<Plug>(markdown-checkbox-done)", actions.d, {
+            buffer = event.buf,
+            silent = true,
+          })
+          vim.keymap.set("n", "<Plug>(markdown-checkbox-important)", actions.i, {
+            buffer = event.buf,
+            silent = true,
+          })
+          vim.keymap.set("n", "<Plug>(markdown-checkbox-blocked)", actions.w, {
+            buffer = event.buf,
+            silent = true,
+          })
+          vim.keymap.set("n", "<Plug>(markdown-checkbox-canceled)", actions.x, {
+            buffer = event.buf,
+            silent = true,
+          })
+
           vim.keymap.set("n", "<LocalLeader>c", dispatch_action, {
             buffer = event.buf,
             desc = "[C]heckbox",
