@@ -1,17 +1,7 @@
--- Register custom commands before returning plugin specs, so that they can be
--- used to lazy-load the plugins.
 vim.api.nvim_create_user_command(
   "Browse",
   function(opts) vim.fn.system { "open", opts.fargs[1] } end,
   { nargs = 1, desc = "Open URL in [Browse]r" }
-)
-
-vim.api.nvim_create_user_command(
-  "Feat",
-  function()
-    vim.cmd [[Flog -order=author -- --boundary --branches HEAD ^origin/main]]
-  end,
-  { desc = "Show [Feat]ure branches (Flog)" }
 )
 
 return {
@@ -58,8 +48,12 @@ return {
     },
   },
   {
-    "akinsho/git-conflict.nvim",
-    version = "*",
+    "julienvincent/hunk.nvim",
+    cmd = { "DiffEditor" },
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-tree/nvim-web-devicons",
+    },
     opts = {},
   },
   {
@@ -100,17 +94,5 @@ return {
         desc = "Toggle [g]it [b]lame for current line (GitSigns)",
       },
     },
-  },
-  {
-    "rbong/vim-flog",
-    version = "*",
-    dependencies = {
-      "tpope/vim-fugitive",
-    },
-    cmd = { "Flog", "Flogsplit", "Floggit" },
-  },
-  {
-    dir = "~/smartlog.nvim",
-    opts = {},
   },
 }
