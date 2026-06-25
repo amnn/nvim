@@ -50,9 +50,14 @@ return {
       local actions_by_buf = {}
 
       local function find_checkbox(buf, cursor)
+        local row = cursor[1] - 1
+        local current_line = vim.api.nvim_buf_get_lines(buf, row, row + 1, false)[1]
+
+        if not current_line then return nil end
+
         local ok, node = pcall(vim.treesitter.get_node, {
           bufnr = buf,
-          pos = { cursor[1] - 1, cursor[2] },
+          pos = { row, #current_line },
           lang = "markdown",
         })
 
