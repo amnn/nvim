@@ -83,16 +83,6 @@ return {
         }
       )
 
-      if not configs.move then
-        configs.move = {
-          default_config = {
-            cmd = { "move-analyzer" },
-            filetypes = { "move" },
-            root_dir = util.root_pattern "Move.toml",
-          },
-        }
-      end
-
       vim.lsp.config("gopls", {
         capabilities = capabilities,
       })
@@ -192,10 +182,10 @@ return {
       })
       vim.lsp.enable "ts_ls"
 
-      vim.lsp.config("move", {
+      vim.lsp.config("move_analyzer", {
         capabilities = capabilities,
       })
-      vim.lsp.enable "move"
+      vim.lsp.enable "move_analyzer"
 
       vim.lsp.config("zls", {
         capabilities = capabilities,
@@ -352,6 +342,7 @@ return {
         move = { "prettier-move" },
         python = { "black" },
         rust = { "rustfmt" },
+        swift = { "swift" },
         typescript = { "prettier" },
       },
       format_on_save = {
