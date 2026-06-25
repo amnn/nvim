@@ -5,6 +5,44 @@ return {
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
     },
+    config = function(_, opts)
+      require("image").setup(opts)
+
+      local processor = require "image/processors/magick_cli"
+      local convert_to_png = processor.convert_to_png
+      local resize = processor.resize
+      local magick = vim.fn.executable "magick" == 1 and "magick" or "convert"
+
+      processor.convert_to_png = function(path, output_path)
+        if vim.fn.executable "rsvg-convert" == 1 and processor.get_format(path) == "svg" then
+          local out_path = output_path or path:gsub("%.[^.]+$", ".png")
+          local result = vim
+            .system({ "rsvg-convert", "--format", "png", "--zoom", "4", "--output", out_path, path })
+            :wait(10000)
+
+          if result.code ~= 0 then
+            error(result.stderr ~= "" and result.stderr or "Failed to convert to PNG")
+          end
+
+          return out_path
+        end
+
+        return convert_to_png(path, output_path)
+      end
+
+      processor.resize = function(path, width, height, output_path)
+        local out_path = output_path or path:gsub("%.([^.]+)$", "-resized.%1")
+        local result = vim
+          .system({ magick, path, "-filter", "Lanczos", "-resize", string.format("%dx%d", width, height), out_path })
+          :wait(10000)
+
+        if result.code ~= 0 then
+          error(result.stderr ~= "" and result.stderr or "Failed to resize")
+        end
+
+        return out_path
+      end
+    end,
     opts = {
       backend = "kitty",
       processor = "magick_cli",
