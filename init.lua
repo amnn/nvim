@@ -38,6 +38,10 @@ vim.opt.updatetime = 1500
 -- Floating Windows
 vim.opt.winborder = "rounded"
 
+-- Terminal title
+vim.opt.title = true
+vim.opt.titlestring = [[nvim - %{%pathshorten(fnamemodify(getcwd(), ':~'))%}]]
+
 -- Basic Keybinds
 local map = vim.keymap.set
 
