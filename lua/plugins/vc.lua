@@ -54,7 +54,17 @@ return {
       "MunifTanjim/nui.nvim",
       "nvim-tree/nvim-web-devicons",
     },
-    opts = {},
+    opts = {
+      hooks = {
+        on_tree_mount = function(context)
+          vim.api.nvim_set_option_value(
+            "wrap",
+            false,
+            { win = context.opts.winid }
+          )
+        end,
+      },
+    },
   },
   {
     "lewis6991/gitsigns.nvim",
