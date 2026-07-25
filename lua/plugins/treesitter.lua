@@ -1,59 +1,55 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    version = "*",
+    branch = "main",
     lazy = false,
+    build = ":TSUpdate",
     config = function()
-      require("nvim-treesitter.configs").setup {
-        ensure_installed = {
-          "c",
-          "clojure",
-          "fennel",
-          "fish",
-          "graphql",
-          "go",
-          "gomod",
-          "gowork",
-          "lua",
-          "markdown",
-          "markdown_inline",
-          "python",
-          "rust",
-          "scheme",
-          "sql",
-          "tsx",
-          "typescript",
-          "vim",
-        },
-
-        modules = {},
-        ignore_install = {},
-        sync_install = false,
-        auto_install = true,
-
-        highlight = {
-          enable = true,
-          disable = { "gitcommit" },
-        },
+      local treesitter = require "nvim-treesitter"
+      local ensure_installed = {
+        "c",
+        "clojure",
+        "fennel",
+        "fish",
+        "graphql",
+        "go",
+        "gomod",
+        "gowork",
+        "lua",
+        "markdown",
+        "markdown_inline",
+        "move",
+        "python",
+        "rust",
+        "scheme",
+        "sql",
+        "tsx",
+        "typescript",
+        "vim",
       }
 
-      local parsers = require("nvim-treesitter.parsers").get_parser_configs()
-      parsers["move"] = {
-        filetype = "move",
-        maintainers = {},
-        install_info = {
-          url = "~/Code/tree-sitter-move/external-crates/move/tooling/tree-sitter",
-          branch = "main",
-          files = { "src/parser.c" },
-          generate_requires_npm = false, -- if stand-alone parser without npm dependencies
-          requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
-        },
-      }
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "TSUpdate",
+        callback = function()
+          require("nvim-treesitter.parsers").move = {
+            install_info = {
+              path = "~/Code/tree-sitter-move/external-crates/move/tooling/tree-sitter",
+            },
+          }
+        end,
+      })
+
+      treesitter.setup()
+      treesitter.install(ensure_installed)
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = ensure_installed,
+        callback = function(event) pcall(vim.treesitter.start, event.buf) end,
+      })
     end,
   },
   {
     "nvim-treesitter/nvim-treesitter-context",
-    version = "*",
     opts = {
       separator = "┄",
     },
