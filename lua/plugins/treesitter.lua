@@ -25,6 +25,7 @@ return {
         "sql",
         "tsx",
         "typescript",
+        "typst",
         "vim",
       }
 

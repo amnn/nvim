@@ -67,8 +67,6 @@ return {
       "williamboman/mason-lspconfig.nvim",
     },
     config = function()
-      local configs = require "lspconfig.configs"
-      local util = require "lspconfig.util"
       local capabilities = vim.tbl_deep_extend(
         "force",
         require("cmp_nvim_lsp").default_capabilities(),
@@ -86,7 +84,6 @@ return {
       vim.lsp.config("gopls", {
         capabilities = capabilities,
       })
-      vim.lsp.enable "gopls"
 
       vim.lsp.config("lua_ls", {
         capabilities = capabilities,
@@ -128,7 +125,6 @@ return {
           },
         },
       })
-      vim.lsp.enable "lua_ls"
 
       vim.lsp.config("rust_analyzer", {
         capabilities = capabilities,
@@ -140,7 +136,6 @@ return {
           },
         },
       })
-      vim.lsp.enable "rust_analyzer"
 
       vim.lsp.config("clangd", {
         capabilities = capabilities,
@@ -156,7 +151,6 @@ return {
           },
         },
       })
-      vim.lsp.enable "clangd"
 
       local ts_hints = {
         includeInlayParameterNameHints = "all",
@@ -180,16 +174,31 @@ return {
           },
         },
       })
-      vim.lsp.enable "ts_ls"
 
       vim.lsp.config("move_analyzer", {
         capabilities = capabilities,
       })
-      vim.lsp.enable "move_analyzer"
+
+      vim.lsp.config("tinymist", {
+        capabilities = capabilities,
+        settings = {
+          formatterMode = "typstyle",
+          formatterPrintWidth = 88,
+          formatterProseWrap = false,
+        },
+      })
 
       vim.lsp.config("zls", {
         capabilities = capabilities,
       })
+
+      vim.lsp.enable "gopls"
+      vim.lsp.enable "lua_ls"
+      vim.lsp.enable "rust_analyzer"
+      vim.lsp.enable "clangd"
+      vim.lsp.enable "ts_ls"
+      vim.lsp.enable "move_analyzer"
+      vim.lsp.enable "tinymist"
       vim.lsp.enable "zls"
     end,
   },
@@ -344,6 +353,7 @@ return {
         rust = { "rustfmt" },
         swift = { "swift" },
         typescript = { "prettier" },
+        typst = { "typstyle" },
       },
       format_on_save = {
         timeout_ms = 500,
@@ -386,7 +396,6 @@ return {
       "williamboman/mason.nvim",
     },
     opts = {
-      automatic_installation = true,
       automatic_enable = false,
     },
   },
