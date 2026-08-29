@@ -38,8 +38,8 @@ return {
     lazy = false,
     keys = {
       {
-        "<S-Tab>",
-        mode = { "i", "n" },
+        "<C-j>",
+        mode = "i",
         'copilot#Accept("\\<CR>")',
         expr = true,
         replace_keycodes = false,

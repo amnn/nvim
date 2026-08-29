@@ -61,22 +61,6 @@ map({ "v" }, "<A-j>", ":m '>+1<CR>gv")
 map({ "v" }, "<A-k>", ":m '<-2<CR>gv")
 
 -- Snippets
-map({ "i", "s" }, "<C-f>", function()
-  if vim.snippet.active { direction = 1 } then
-    return [[<CMD>lua vim.snippet.jump(1)<CR>]]
-  else
-    return "<C-f>"
-  end
-end, { expr = true })
-
-map({ "i", "s" }, "<C-b>", function()
-  if vim.snippet.active { direction = -1 } then
-    return [[<CMD>lua vim.snippet.jump(-1)<CR>]]
-  else
-    return "<C-b>"
-  end
-end, { expr = true })
-
 map({ "i", "s" }, "<C-c>", function()
   if vim.snippet.active() then
     return [[<CMD>lua vim.snippet.stop()<CR>]]

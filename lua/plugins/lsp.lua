@@ -4,50 +4,23 @@ return {
     opts = {},
   },
   {
-    "hrsh7th/cmp-nvim-lsp",
-    version = "*",
-    dependencies = {
-      "hrsh7th/nvim-cmp",
+    "saghen/blink.cmp",
+    version = "1.*",
+    opts = {
+      keymap = { preset = "default" },
+      completion = {
+        documentation = { auto_show = true },
+      },
+      sources = {
+        default = { "lsp", "path", "buffer" },
+      },
+      signature = { enabled = true },
+      cmdline = {
+        enabled = true,
+        keymap = { preset = "cmdline" },
+        sources = { "buffer", "cmdline" },
+      },
     },
-    opts = {},
-  },
-  {
-    "hrsh7th/nvim-cmp",
-    version = "*",
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp-signature-help",
-      "petertriho/cmp-git",
-    },
-    config = function()
-      local cmp = require "cmp"
-      cmp.setup {
-        snippet = {
-          expand = function(args) vim.snippet.expand(args.body) end,
-        },
-
-        window = {
-          completion = cmp.config.window.bordered(),
-          documentation = cmp.config.window.bordered(),
-        },
-
-        mapping = cmp.mapping.preset.insert(),
-
-        sources = cmp.config.sources({
-          { name = "nvim_lsp_signature_help" },
-          { name = "nvim_lsp" },
-        }, {
-          { name = "buffer" },
-        }),
-      }
-
-      cmp.setup.filetype("gitcommit", {
-        sources = cmp.config.sources({
-          { name = "git" },
-        }, {
-          { name = "buffer" },
-        }),
-      })
-    end,
   },
   {
     "j-hui/fidget.nvim",
@@ -63,26 +36,27 @@ return {
     version = "*",
     events = { "VeryLazy" },
     dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
+      "saghen/blink.cmp",
       "williamboman/mason-lspconfig.nvim",
     },
     config = function()
-      local capabilities = vim.tbl_deep_extend(
-        "force",
-        require("cmp_nvim_lsp").default_capabilities(),
-        {
-          workspace = {
-            didChangeWatchedFiles = {
-              -- Disable workspace/didChangeWatchedFiles. It causes issues in
-              -- large projects, where the file watcher opens too many files.
-              dynamicRegistration = false,
-            },
+      local capabilities = require("blink.cmp").get_lsp_capabilities({
+        workspace = {
+          didChangeWatchedFiles = {
+            -- Disable workspace/didChangeWatchedFiles. It causes issues in
+            -- large projects, where the file watcher opens too many files.
+            dynamicRegistration = false,
           },
-        }
-      )
+        },
+      }, true)
 
       vim.lsp.config("gopls", {
         capabilities = capabilities,
+        settings = {
+          gopls = {
+            usePlaceholders = true,
+          },
+        },
       })
 
       vim.lsp.config("lua_ls", {
@@ -97,10 +71,11 @@ return {
             return
           end
 
-          -- Copy all the runtime path directories, so we can add luv.
+          -- Index Lua roots rather than whole plugin directories. Otherwise,
+          -- test monkey-patches can be mistaken for API overloads.
           local library = vim.tbl_deep_extend(
             "keep",
-            vim.api.nvim_get_runtime_file("", true),
+            vim.api.nvim_get_runtime_file("lua", true),
             {}
           )
 
@@ -121,6 +96,9 @@ return {
 
         settings = {
           Lua = {
+            completion = {
+              callSnippet = "Replace",
+            },
             hint = { enable = true },
           },
         },
@@ -166,6 +144,9 @@ return {
       vim.lsp.config("ts_ls", {
         capabilities = capabilities,
         settings = {
+          completions = {
+            completeFunctionCalls = true,
+          },
           typescript = {
             inlayHints = ts_hints,
           },
@@ -201,11 +182,6 @@ return {
       vim.lsp.enable "tinymist"
       vim.lsp.enable "zls"
     end,
-  },
-  {
-    "petertriho/cmp-git",
-    version = "*",
-    opts = {},
   },
   {
     "stevearc/conform.nvim",

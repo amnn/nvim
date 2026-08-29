@@ -6,9 +6,6 @@ return {
     config = function()
       require("crates").setup {
         completion = {
-          cmp = {
-            enabled = true,
-          },
           crates = {
             enabled = true,
             max_results = 8,
@@ -22,11 +19,6 @@ return {
           hover = true,
         },
       }
-
-      local cmp = require "cmp"
-      local cfg = cmp.get_config()
-      table.insert(cfg, { name = "crates" })
-      cmp.setup(cfg)
     end,
   },
 }
