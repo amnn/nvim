@@ -75,6 +75,11 @@
       "src": "https://github.com/nvim-lualine/lualine.nvim",
       "version": "'221ce6b2d999187044529f49da6554a92f740a96'"
     },
+    "lz.n": {
+      "rev": "30a9fe7ead3b93f500106e181c84cc7567febe2f",
+      "src": "https://github.com/lumen-oss/lz.n",
+      "version": "3.0.0 - 4.0.0"
+    },
     "mason-lspconfig.nvim": {
       "rev": "a5671269a1ddfa7790cdf97c14e600e269da550f",
       "src": "https://github.com/williamboman/mason-lspconfig.nvim",

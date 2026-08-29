@@ -190,26 +190,33 @@ return {
     map("n", "_", function() require("oil").open(vim.fn.getcwd()) end, {
       desc = "Open Neovim's current working directory (Oil)",
     })
-
-    require("quicker").setup {
-      keys = {
-        {
-          ">",
-          function()
-            require("quicker").expand {
-              before = 2,
-              after = 2,
-              add_to_existing = true,
-            }
-          end,
-          desc = "Expand quickfix context",
-        },
-        {
-          "<",
-          function() require("quicker").collapse() end,
-          desc = "Collapse quickfix context",
-        },
-      },
-    }
   end,
+  lazy = {
+    {
+      "quicker.nvim",
+      ft = "qf",
+      after = function()
+        require("quicker").setup {
+          keys = {
+            {
+              ">",
+              function()
+                require("quicker").expand {
+                  before = 2,
+                  after = 2,
+                  add_to_existing = true,
+                }
+              end,
+              desc = "Expand quickfix context",
+            },
+            {
+              "<",
+              function() require("quicker").collapse() end,
+              desc = "Collapse quickfix context",
+            },
+          },
+        }
+      end,
+    },
+  },
 }

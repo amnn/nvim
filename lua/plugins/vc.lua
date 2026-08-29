@@ -40,18 +40,6 @@ return {
       desc = "Copy [G]it[H]ub URL for selection (Fugitive)",
     })
 
-    require("hunk").setup {
-      hooks = {
-        on_tree_mount = function(context)
-          vim.api.nvim_set_option_value(
-            "wrap",
-            false,
-            { win = context.opts.winid }
-          )
-        end,
-      },
-    }
-
     vim.api.nvim_create_user_command(
       "GHunk",
       function() require("gitsigns").preview_hunk() end,
@@ -90,4 +78,23 @@ return {
       { desc = "Toggle [g]it [b]lame for current line (GitSigns)" }
     )
   end,
+  lazy = {
+    {
+      "hunk.nvim",
+      cmd = "DiffEditor",
+      after = function()
+        require("hunk").setup {
+          hooks = {
+            on_tree_mount = function(context)
+              vim.api.nvim_set_option_value(
+                "wrap",
+                false,
+                { win = context.opts.winid }
+              )
+            end,
+          },
+        }
+      end,
+    },
+  },
 }
