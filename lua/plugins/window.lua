@@ -1,27 +1,32 @@
+local github = require("config.packages").github
+
 return {
-  {
-    "sindrets/winshift.nvim",
-    version = "*",
-    opts = {
+  packages = {
+    github(
+      "sindrets/winshift.nvim",
+      "37468ed6f385dfb50402368669766504c0e15583"
+    ),
+  },
+  configure = function()
+    require("winshift").setup {
       keymaps = {
         win_move_mode = {
           ["s"] = "swap",
         },
       },
-    },
-    keys = {
-      {
-        "<C-w><C-w>",
-        mode = { "i", "n" },
-        [[<CMD>WinShift<CR>]],
-        desc = "WinShift Mode (WinShift)",
-      },
-      {
-        "<C-w>x",
-        mode = { "i", "n" },
-        [[<CMD>WinShift swap<CR>]],
-        desc = "Swap windows (WinShift)",
-      },
-    },
-  },
+    }
+
+    vim.keymap.set(
+      { "i", "n" },
+      "<C-w><C-w>",
+      [[<CMD>WinShift<CR>]],
+      { desc = "WinShift Mode (WinShift)" }
+    )
+    vim.keymap.set(
+      { "i", "n" },
+      "<C-w>x",
+      [[<CMD>WinShift swap<CR>]],
+      { desc = "Swap windows (WinShift)" }
+    )
+  end,
 }

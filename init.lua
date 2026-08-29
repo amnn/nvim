@@ -69,12 +69,11 @@ map({ "i", "s" }, "<C-c>", function()
   end
 end, { expr = true })
 
--- Make sure to setup `mapleader` and `maplocalleader` before
--- loading lazy.nvim so that mappings are correct.
+-- Define leaders before plugin mappings are created.
 vim.g.mapleader = " "
 vim.g.maplocalleader = ";"
 
-require "config.lazy"
+require "config.pack"
 
 -- FIXME fzf live grep hangs on <C-c> -- fixed by neovim/neovim#30056
 
