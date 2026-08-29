@@ -2,22 +2,13 @@ local github = require("config.packages").github
 
 return {
   packages = {
-    github(
-      "amnn/lsp-echohint.nvim",
-      "650b3920b9ede5ea002a08661d00501e4d305766"
-    ),
-    github("saghen/blink.cmp", "78336bc89ee5365633bcf754d93df01678b5c08f"),
-    github("j-hui/fidget.nvim", "e1a07a5e46fb65a45a0c76870140bd2d16a73ebf"),
-    github("neovim/nvim-lspconfig", "b89138d9af0a96e6048e202a15765fc6b6416bd4"),
-    github("stevearc/conform.nvim", "3543d000dafbc41cc7761d860cfdb24e82154f75"),
-    github(
-      "williamboman/mason-lspconfig.nvim",
-      "a5671269a1ddfa7790cdf97c14e600e269da550f"
-    ),
-    github(
-      "williamboman/mason.nvim",
-      "2a6940af80375532e5e9e7c1f2fc6319a1b7a69d"
-    ),
+    github "amnn/lsp-echohint.nvim",
+    github("saghen/blink.cmp", vim.version.range "1"),
+    github("j-hui/fidget.nvim", vim.version.range "*"),
+    github("neovim/nvim-lspconfig", vim.version.range "*"),
+    github("stevearc/conform.nvim", vim.version.range "*"),
+    github("williamboman/mason-lspconfig.nvim", vim.version.range "*"),
+    github("williamboman/mason.nvim", vim.version.range "*"),
   },
   configure = function()
     require("mason").setup {}
@@ -81,11 +72,11 @@ return {
 
         -- Index Lua roots rather than whole plugin directories. Otherwise,
         -- test monkey-patches can be mistaken for API overloads.
-        local library = vim.tbl_deep_extend(
-          "keep",
-          vim.api.nvim_get_runtime_file("lua", true),
-          {}
-        )
+        local library = vim.api.nvim_get_runtime_file("lua", true)
+        for _, plugin in ipairs(vim.pack.get(nil, { info = false })) do
+          local lua_path = vim.fs.joinpath(plugin.path, "lua")
+          if vim.uv.fs_stat(lua_path) then table.insert(library, lua_path) end
+        end
 
         table.insert(library, "${3rd}/luv/library")
 

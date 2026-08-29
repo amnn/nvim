@@ -2,10 +2,7 @@ local github = require("config.packages").github
 
 return {
   packages = {
-    github(
-      "sindrets/winshift.nvim",
-      "37468ed6f385dfb50402368669766504c0e15583"
-    ),
+    github "sindrets/winshift.nvim",
   },
   lazy = {
     {

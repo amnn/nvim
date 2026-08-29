@@ -293,11 +293,8 @@ end
 
 return {
   packages = {
-    github("3rd/image.nvim", "5c6f29a5069e1f7bd5773ce5907454063b0f125d"),
-    github(
-      "MeanderingProgrammer/render-markdown.nvim",
-      "4663eb3ecd538bd5062628fb6d95bbe6bdca78f6"
-    ),
+    github "3rd/image.nvim",
+    github "MeanderingProgrammer/render-markdown.nvim",
   },
   lazy = {
     {

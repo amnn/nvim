@@ -2,7 +2,7 @@ local github = require("config.packages").github
 
 return {
   packages = {
-    github("saecki/crates.nvim", "afcd1cc3eeceb5783676fc8464389b9216a29d05"),
+    github("saecki/crates.nvim", "stable"),
   },
   lazy = {
     {

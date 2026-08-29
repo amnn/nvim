@@ -2,18 +2,12 @@ local github = require("config.packages").github
 
 return {
   packages = {
-    github(
-      "ahmedkhalf/project.nvim",
-      "8c6bad7d22eef1b71144b401c9f74ed01526a4fb"
-    ),
-    github("folke/which-key.nvim", "fcbf4eea17cb299c02557d576f0d568878e354a4"),
-    github("ibhagwan/fzf-lua", "05e44d38de0a79c11fba5f7bf8138791b1dbdd1e"),
-    github(
-      "nvim-tree/nvim-web-devicons",
-      "2ae6958df7ced50baac5035cec0c15799eedfbf7"
-    ),
-    github("stevearc/oil.nvim", "17c0a8faaf48298a0c0cfb0d757c0eaee4ff7a32"),
-    github("stevearc/quicker.nvim", "4a6883cb13fe097a20a046eb55f6dffd239276e3"),
+    github "ahmedkhalf/project.nvim",
+    github("folke/which-key.nvim", vim.version.range "*"),
+    github "ibhagwan/fzf-lua",
+    github "nvim-tree/nvim-web-devicons",
+    github("stevearc/oil.nvim", vim.version.range "*"),
+    github("stevearc/quicker.nvim", vim.version.range "*"),
   },
   configure = function()
     require("project_nvim").setup {

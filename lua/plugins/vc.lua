@@ -2,17 +2,11 @@ local github = require("config.packages").github
 
 return {
   packages = {
-    github("tpope/vim-fugitive", "96c1009fcf8ce60161cc938d149dd5a66d570756"),
-    github("tpope/vim-rhubarb", "5496d7c94581c4c9ad7430357449bb57fc59f501"),
-    github(
-      "julienvincent/hunk.nvim",
-      "c8a8e7b6973576f63e5bf39aa8338d7f37f4dc53"
-    ),
-    github("MunifTanjim/nui.nvim", "10fc361835c856ba4233ef5ea135b919bf3dce97"),
-    github(
-      "lewis6991/gitsigns.nvim",
-      "5be654f2232c10ddcad19c1607a67b6b4b78fc29"
-    ),
+    github "tpope/vim-fugitive",
+    github "tpope/vim-rhubarb",
+    github "julienvincent/hunk.nvim",
+    github "MunifTanjim/nui.nvim",
+    github "lewis6991/gitsigns.nvim",
   },
   configure = function()
     vim.api.nvim_create_user_command(

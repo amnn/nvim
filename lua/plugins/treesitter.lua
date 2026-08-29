@@ -2,14 +2,8 @@ local github = require("config.packages").github
 
 return {
   packages = {
-    github(
-      "nvim-treesitter/nvim-treesitter",
-      "857651fce37eba032ebe28f3a206283cdc65c45a"
-    ),
-    github(
-      "nvim-treesitter/nvim-treesitter-context",
-      "f3061339b8eaf9fda873600bc425b8d2d8502533"
-    ),
+    github("nvim-treesitter/nvim-treesitter", "main"),
+    github "nvim-treesitter/nvim-treesitter-context",
   },
   configure = function()
     local treesitter = require "nvim-treesitter"

@@ -2,7 +2,7 @@ local github = require("config.packages").github
 
 return {
   packages = {
-    github("github/copilot.vim", "a12fd5672110c8aa7e3c8419e28c96943ca179be"),
+    github("github/copilot.vim", vim.version.range "*"),
   },
   configure = function()
     -- Keybindings for copying file paths and regions to clipboard

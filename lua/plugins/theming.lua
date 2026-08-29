@@ -2,19 +2,9 @@ local github = require("config.packages").github
 
 return {
   packages = {
-    github(
-      "projekt0n/github-nvim-theme",
-      "c106c9472154d6b2c74b74565616b877ae8ed31d",
-      "github-theme"
-    ),
-    github(
-      "nvim-lualine/lualine.nvim",
-      "221ce6b2d999187044529f49da6554a92f740a96"
-    ),
-    github(
-      "cormacrelf/dark-notify",
-      "46879bc7783e65ab6ed9607ef05fd9c1424786b6"
-    ),
+    github("projekt0n/github-nvim-theme", nil, "github-theme"),
+    github "nvim-lualine/lualine.nvim",
+    github("cormacrelf/dark-notify", vim.version.range "*"),
   },
   configure = function()
     require("github-theme").setup {

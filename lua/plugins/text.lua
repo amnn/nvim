@@ -2,27 +2,15 @@ local github = require("config.packages").github
 
 return {
   packages = {
-    github("Grazfather/sexp.nvim", "2a7c48d602dcb3fb39978c5ad8f1890cb4e95940"),
-    github("tpope/vim-repeat", "65846025c15494983dafe5e3b46c8f88ab2e9635"),
-    github(
-      "HiPhish/rainbow-delimiters.nvim",
-      "b81d594e82b6ca1530797bdcfd16a1219250a2d8"
-    ),
-    github("cappyzawa/trim.nvim", "765360a6f6ac732f4c78c5c694f4b892a55b53ec"),
-    github("folke/flash.nvim", "ec0bf2842189f65f60fd40bf3557cac1029cc932"),
-    github(
-      "folke/todo-comments.nvim",
-      "31e3c38ce9b29781e4422fc0322eb0a21f4e8668"
-    ),
-    github("nvim-lua/plenary.nvim", "74b06c6c75e4eeb3108ec01852001636d85a932b"),
-    github(
-      "kylechui/nvim-surround",
-      "2e93e154de9ff326def6480a4358bfc149d5da2c"
-    ),
-    github(
-      "m4xshen/autoclose.nvim",
-      "27063904b2238ce7867e430885b6abcfb08357ea"
-    ),
+    github "Grazfather/sexp.nvim",
+    github "tpope/vim-repeat",
+    github("HiPhish/rainbow-delimiters.nvim", vim.version.range "*"),
+    github("cappyzawa/trim.nvim", vim.version.range "*"),
+    github("folke/flash.nvim", vim.version.range "*"),
+    github("folke/todo-comments.nvim", vim.version.range "*"),
+    github "nvim-lua/plenary.nvim",
+    github("kylechui/nvim-surround", vim.version.range "*"),
+    github "m4xshen/autoclose.nvim",
   },
   configure = function()
     require("sexp").setup {
