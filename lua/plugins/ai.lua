@@ -1,47 +1,46 @@
+local eager = require("config.packages").eager
 local github = require("config.packages").github
 
-return {
-  packages = {
-    github("github/copilot.vim", vim.version.range "*"),
-  },
-  configure = function()
-    -- Keybindings for copying file paths and regions to clipboard
-    vim.keymap.set("n", "<leader>yf", function()
-      local filepath = vim.fn.expand "%:p"
-      vim.fn.setreg("+", filepath)
-      print("Copied file path: " .. filepath)
-    end, { desc = "[Y]ank [f]ile path" })
-
-    vim.keymap.set("n", "<leader>yl", function()
-      local filepath = vim.fn.expand "%:p"
-      local line = vim.fn.line "."
-      local result = filepath .. ":" .. line
-      vim.fn.setreg("+", result)
-      print("Copied file:line: " .. result)
-    end, { desc = "[Y]ank file path with [l]ine number" })
-
-    vim.keymap.set("v", "<leader>yl", function()
-      -- Exit visual mode first to ensure marks are set
-      vim.api.nvim_feedkeys(
-        vim.api.nvim_replace_termcodes("<Esc>", true, false, true),
-        "n",
-        false
-      )
-      vim.schedule(function()
-        local filepath = vim.fn.expand "%:p"
-        local start_line = vim.fn.line "'<"
-        local end_line = vim.fn.line "'>"
-        local result = filepath .. ":" .. start_line .. "-" .. end_line
-        vim.fn.setreg("+", result)
-        print("Copied file:region: " .. result)
-      end)
-    end, { desc = "[Y]ank file path with [l]ine range" })
-
-    vim.g.copilot_no_tab_map = true
-    vim.keymap.set("i", "<C-j>", 'copilot#Accept("\\<CR>")', {
-      expr = true,
-      replace_keycodes = false,
-      desc = "Accept suggestion (Copilot)",
-    })
-  end,
+eager {
+  github("github/copilot.vim", vim.version.range "*"),
 }
+
+-- Keybindings for copying file paths and regions to clipboard
+vim.keymap.set("n", "<leader>yf", function()
+  local filepath = vim.fn.expand "%:p"
+  vim.fn.setreg("+", filepath)
+  print("Copied file path: " .. filepath)
+end, { desc = "[Y]ank [f]ile path" })
+
+vim.keymap.set("n", "<leader>yl", function()
+  local filepath = vim.fn.expand "%:p"
+  local line = vim.fn.line "."
+  local result = filepath .. ":" .. line
+  vim.fn.setreg("+", result)
+  print("Copied file:line: " .. result)
+end, { desc = "[Y]ank file path with [l]ine number" })
+
+vim.keymap.set("v", "<leader>yl", function()
+  -- Exit visual mode first to ensure marks are set
+  vim.api.nvim_feedkeys(
+    vim.api.nvim_replace_termcodes("<Esc>", true, false, true),
+    "n",
+    false
+  )
+  vim.schedule(function()
+    local filepath = vim.fn.expand "%:p"
+    local start_line = vim.fn.line "'<"
+    local end_line = vim.fn.line "'>"
+    local result = filepath .. ":" .. start_line .. "-" .. end_line
+    vim.fn.setreg("+", result)
+    print("Copied file:region: " .. result)
+  end)
+end, { desc = "[Y]ank file path with [l]ine range" })
+
+-- Replace tab as copilot's accept keybinding with Ctrl+j
+vim.g.copilot_no_tab_map = true
+vim.keymap.set("i", "<C-j>", 'copilot#Accept("\\<CR>")', {
+  expr = true,
+  replace_keycodes = false,
+  desc = "Accept suggestion (Copilot)",
+})

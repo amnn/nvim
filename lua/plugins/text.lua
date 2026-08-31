@@ -1,102 +1,103 @@
+local eager = require("config.packages").eager
 local github = require("config.packages").github
 
-return {
-  packages = {
-    github "Grazfather/sexp.nvim",
-    github "tpope/vim-repeat",
-    github("HiPhish/rainbow-delimiters.nvim", vim.version.range "*"),
-    github("cappyzawa/trim.nvim", vim.version.range "*"),
-    github("folke/flash.nvim", vim.version.range "*"),
-    github("folke/todo-comments.nvim", vim.version.range "*"),
-    github "nvim-lua/plenary.nvim",
-    github("kylechui/nvim-surround", vim.version.range "*"),
-    github "m4xshen/autoclose.nvim",
+eager {
+  github "Grazfather/sexp.nvim",
+  github "tpope/vim-repeat",
+  github("HiPhish/rainbow-delimiters.nvim", vim.version.range "*"),
+  github("cappyzawa/trim.nvim", vim.version.range "*"),
+  github("folke/flash.nvim", vim.version.range "*"),
+  github("folke/todo-comments.nvim", vim.version.range "*"),
+  github "nvim-lua/plenary.nvim",
+  github("kylechui/nvim-surround", vim.version.range "*"),
+  github "m4xshen/autoclose.nvim",
+}
+
+require("sexp").setup {
+  enable_insert_mode_mappings = false,
+  insert_after_wrap = true,
+  mappings = {
+    sexp_round_head_wrap_element = "<LocalLeader>(",
+    sexp_round_tail_wrap_element = "<LocalLeader>)",
+    sexp_square_head_wrap_element = "<LocalLeader>[",
+    sexp_square_tail_wrap_element = "<LocalLeader>]",
+    sexp_curly_head_wrap_element = "<LocalLeader>{",
+    sexp_curly_tail_wrap_element = "<LocalLeader>}",
+    sexp_splice_list = "<LocalLeader>S",
+    sexp_raise_element = "<LocalLeader>R",
+    sexp_swap_element_backward = "<LocalLeader>T",
+    sexp_swap_element_forward = "<LocalLeader>t",
+    sexp_emit_head_element = "<LocalLeader>hb",
+    sexp_emit_tail_element = "<LocalLeader>lb",
+    sexp_capture_prev_element = "<LocalLeader>hs",
+    sexp_capture_next_element = "<LocalLeader>ls",
   },
-  configure = function()
-    require("sexp").setup {
-      enable_insert_mode_mappings = false,
-      insert_after_wrap = true,
-      mappings = {
-        sexp_round_head_wrap_element = "<LocalLeader>(",
-        sexp_round_tail_wrap_element = "<LocalLeader>)",
-        sexp_square_head_wrap_element = "<LocalLeader>[",
-        sexp_square_tail_wrap_element = "<LocalLeader>]",
-        sexp_curly_head_wrap_element = "<LocalLeader>{",
-        sexp_curly_tail_wrap_element = "<LocalLeader>}",
-        sexp_splice_list = "<LocalLeader>S",
-        sexp_raise_element = "<LocalLeader>R",
-        sexp_swap_element_backward = "<LocalLeader>T",
-        sexp_swap_element_forward = "<LocalLeader>t",
-        sexp_emit_head_element = "<LocalLeader>hb",
-        sexp_emit_tail_element = "<LocalLeader>lb",
-        sexp_capture_prev_element = "<LocalLeader>hs",
-        sexp_capture_next_element = "<LocalLeader>ls",
-      },
-    }
+}
 
-    local rainbow_delimiters = require "rainbow-delimiters"
-    require("rainbow-delimiters.setup").setup {
-      strategy = {
-        [""] = rainbow_delimiters.strategy["global"],
-      },
-      query = {
-        [""] = "rainbow-delimiters",
-      },
-    }
+local rainbow_delimiters = require "rainbow-delimiters"
+require("rainbow-delimiters.setup").setup {
+  strategy = {
+    [""] = rainbow_delimiters.strategy["global"],
+  },
+  query = {
+    [""] = "rainbow-delimiters",
+  },
+}
 
-    require("trim").setup {}
+require("trim").setup {}
 
-    require("flash").setup {
-      keys = { "f", "F", "t", "T", [";"] = "\\", "," },
-    }
-    vim.keymap.set(
-      { "n", "x" },
-      "s",
-      function() require("flash").jump() end,
-      { desc = "Search (Flash)" }
-    )
-    vim.keymap.set(
-      { "n", "x", "o" },
-      "S",
-      function() require("flash").treesitter() end,
-      { desc = "Search Treesitter (Flash)" }
-    )
-    vim.keymap.set(
-      "c",
-      "<C-s>",
-      function() require("flash").toggle() end,
-      { desc = "Toggle Search (Flash)" }
-    )
+require("flash").setup {
+  keys = { "f", "F", "t", "T", [";"] = "\\", "," },
+}
 
-    require("todo-comments").setup {
-      highlight = {
-        before = "",
-        after = "",
-        keyword = "fg",
-        pattern = [[.*<(KEYWORDS)>]],
-      },
-      search = {
-        pattern = [[\b(KEYWORDS)\b]],
-      },
-    }
+vim.keymap.set(
+  { "n", "x" },
+  "s",
+  function() require("flash").jump() end,
+  { desc = "Search (Flash)" }
+)
 
-    require("nvim-surround").setup {}
+vim.keymap.set(
+  { "n", "x", "o" },
+  "S",
+  function() require("flash").treesitter() end,
+  { desc = "Search Treesitter (Flash)" }
+)
 
-    require("autoclose").setup {
-      keys = {
-        ["'"] = { escape = true, close = false, pair = "''" },
-        ["`"] = { escape = true, close = false, pair = "``" },
-      },
-      options = {
-        pair_spaces = true,
-        disabled_filetypes = {
-          "gitcommit",
-          "markdown",
-          "text",
-          "typescript",
-          "typescriptreact",
-        },
-      },
-    }
-  end,
+vim.keymap.set(
+  "c",
+  "<C-s>",
+  function() require("flash").toggle() end,
+  { desc = "Toggle Search (Flash)" }
+)
+
+require("todo-comments").setup {
+  highlight = {
+    before = "",
+    after = "",
+    keyword = "fg",
+    pattern = [[.*<(KEYWORDS)>]],
+  },
+  search = {
+    pattern = [[\b(KEYWORDS)\b]],
+  },
+}
+
+require("nvim-surround").setup {}
+
+require("autoclose").setup {
+  keys = {
+    ["'"] = { escape = true, close = false, pair = "''" },
+    ["`"] = { escape = true, close = false, pair = "``" },
+  },
+  options = {
+    pair_spaces = true,
+    disabled_filetypes = {
+      "gitcommit",
+      "markdown",
+      "text",
+      "typescript",
+      "typescriptreact",
+    },
+  },
 }

@@ -1,3 +1,4 @@
+local lazy = require("config.packages").lazy
 local github = require("config.packages").github
 
 local image_opts = {
@@ -291,36 +292,35 @@ local function setup_render_markdown()
   })
 end
 
-return {
-  packages = {
-    github "3rd/image.nvim",
-    github "MeanderingProgrammer/render-markdown.nvim",
-  },
-  lazy = {
-    {
-      "image.nvim",
-      ft = "markdown",
-      event = {
-        {
-          event = { "BufReadPre", "BufNewFile" },
-          pattern = {
-            "*.png",
-            "*.jpg",
-            "*.jpeg",
-            "*.gif",
-            "*.webp",
-            "*.avif",
-            "*.svg",
-          },
+lazy {
+  github "3rd/image.nvim",
+  github "MeanderingProgrammer/render-markdown.nvim",
+}
+
+require("lz.n").load {
+  {
+    "image.nvim",
+    ft = "markdown",
+    event = {
+      {
+        event = { "BufReadPre", "BufNewFile" },
+        pattern = {
+          "*.png",
+          "*.jpg",
+          "*.jpeg",
+          "*.gif",
+          "*.webp",
+          "*.avif",
+          "*.svg",
         },
       },
-      after = setup_image,
     },
-    {
-      "render-markdown.nvim",
-      ft = "markdown",
-      before = function() require("lz.n").trigger_load "image.nvim" end,
-      after = setup_render_markdown,
-    },
+    after = setup_image,
+  },
+  {
+    "render-markdown.nvim",
+    ft = "markdown",
+    before = function() require("lz.n").trigger_load "image.nvim" end,
+    after = setup_render_markdown,
   },
 }
