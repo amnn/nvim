@@ -9,7 +9,6 @@ require("lz.n").load {
       "TodoTelescope",
       "TodoTrouble",
     },
-    before = function() vim.cmd.packadd "plenary.nvim" end,
     after = function()
       local todo = require "todo-comments"
       todo.setup {

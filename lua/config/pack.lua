@@ -8,6 +8,8 @@ end
 
 local function eager(specs) vim.pack.add(specs, { confirm = false }) end
 
+local function lib(specs) vim.pack.add(specs, { confirm = false, load = false }) end
+
 local function lazy(specs)
   vim.pack.add(specs, { confirm = false, load = function() end })
 end
@@ -41,10 +43,16 @@ eager {
   github("cormacrelf/dark-notify", vim.version.range "*"),
 }
 
+lib {
+  github "nvim-tree/nvim-web-devicons",
+  github "nvim-lua/plenary.nvim",
+  github "MunifTanjim/nui.nvim",
+  github "tpope/vim-repeat",
+}
+
 lazy {
   -- Theming
   github "nvim-lualine/lualine.nvim",
-  github "nvim-tree/nvim-web-devicons",
 
   -- Treesitter
   github("nvim-treesitter/nvim-treesitter", "main"),
@@ -59,12 +67,10 @@ lazy {
 
   -- Text editing
   github "Grazfather/sexp.nvim",
-  github "tpope/vim-repeat",
   github("HiPhish/rainbow-delimiters.nvim", vim.version.range "*"),
   github("cappyzawa/trim.nvim", vim.version.range "*"),
   github("folke/flash.nvim", vim.version.range "*"),
   github("folke/todo-comments.nvim", vim.version.range "*"),
-  github "nvim-lua/plenary.nvim",
   github("kylechui/nvim-surround", vim.version.range "*"),
   github "m4xshen/autoclose.nvim",
 
@@ -76,7 +82,6 @@ lazy {
   github "tpope/vim-rhubarb",
   github "lewis6991/gitsigns.nvim",
   github "julienvincent/hunk.nvim",
-  github "MunifTanjim/nui.nvim",
 
   -- AI
   github("github/copilot.vim", vim.version.range "*"),
@@ -96,7 +101,8 @@ lazy {
   github "MeanderingProgrammer/render-markdown.nvim",
 }
 
--- Configuration
+-- Configuration modules execute eager setup or register lz.n triggers. Files
+-- under lua/ are not sourced automatically from runtimepath.
 
 -- Theming
 require "plugins.theming.github-theme"

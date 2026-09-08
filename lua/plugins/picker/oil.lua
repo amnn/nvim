@@ -2,7 +2,6 @@ require("lz.n").load {
   {
     "oil.nvim",
     cmd = "Oil",
-    before = function() vim.cmd.packadd "nvim-web-devicons" end,
     keys = {
       {
         "-",

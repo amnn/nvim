@@ -2,11 +2,6 @@ require("lz.n").load {
   {
     "render-markdown.nvim",
     ft = "markdown",
-    before = function()
-      vim.cmd.packadd "nvim-web-devicons"
-      vim.cmd.packadd "vim-repeat"
-      require("lz.n").trigger_load "image.nvim"
-    end,
     after = function()
       require("render-markdown").setup {
         checkbox = {

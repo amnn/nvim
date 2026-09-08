@@ -2,7 +2,6 @@ require("lz.n").load {
   {
     "lualine.nvim",
     event = "DeferredUIEnter",
-    before = function() vim.cmd.packadd "nvim-web-devicons" end,
     after = function()
       require("lualine").setup {
         options = {

@@ -2,7 +2,6 @@ require("lz.n").load {
   {
     "sexp.nvim",
     ft = { "clojure", "fennel", "lisp", "scheme", "timl" },
-    before = function() vim.cmd.packadd "vim-repeat" end,
     after = function()
       require("sexp").setup {
         enable_insert_mode_mappings = false,

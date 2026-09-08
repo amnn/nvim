@@ -3,7 +3,6 @@ require("lz.n").load {
     "which-key.nvim",
     event = "DeferredUIEnter",
     cmd = "WhichKey",
-    before = function() vim.cmd.packadd "nvim-web-devicons" end,
     keys = {
       {
         "<leader>?",

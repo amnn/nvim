@@ -72,7 +72,6 @@ require("lz.n").load {
   {
     "fzf-lua",
     cmd = "FzfLua",
-    before = function() vim.cmd.packadd "nvim-web-devicons" end,
     keys = {
       {
         "<leader>b",

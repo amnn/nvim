@@ -3,7 +3,6 @@ require("lz.n").load {
     "gitsigns.nvim",
     event = { "BufReadPost", "BufNewFile" },
     cmd = { "GHunk", "Gitsigns" },
-    before = function() vim.cmd.packadd "vim-repeat" end,
     after = function()
       vim.api.nvim_create_user_command(
         "GHunk",
