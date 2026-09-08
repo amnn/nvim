@@ -1,9 +1,16 @@
-local lazy = require("config.packages").lazy
-local github = require("config.packages").github
+local p = require "config.packages"
 
-lazy {
-  github "sindrets/winshift.nvim",
-}
+local function setup()
+  require("winshift").setup {
+    keymaps = {
+      win_move_mode = {
+        ["s"] = "swap",
+      },
+    },
+  }
+end
+
+p.lazy { p.github "sindrets/winshift.nvim" }
 
 require("lz.n").load {
   {
@@ -23,14 +30,6 @@ require("lz.n").load {
         desc = "Swap windows (WinShift)",
       },
     },
-    after = function()
-      require("winshift").setup {
-        keymaps = {
-          win_move_mode = {
-            ["s"] = "swap",
-          },
-        },
-      }
-    end,
+    after = setup,
   },
 }

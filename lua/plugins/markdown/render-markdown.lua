@@ -1,158 +1,65 @@
-local lazy = require("config.packages").lazy
-local github = require("config.packages").github
+local p = require "config.packages"
 
-local image_opts = {
-  backend = "kitty",
-  processor = "magick_cli",
-  integrations = {
-    markdown = {
-      clear_in_insert_mode = false,
-      download_remote_images = false,
-      only_render_image_at_cursor = true,
-      only_render_image_at_cursor_mode = "popup",
-      floating_windows = true,
-      filetypes = { "markdown" },
-    },
-  },
-  scale_factor = 1.0,
-  max_height_window_percentage = 40,
-  window_overlap_clear_enabled = true,
-  editor_only_render_when_focused = true,
-  tmux_show_only_in_active_window = true,
-  hijack_file_patterns = {
-    "*.png",
-    "*.jpg",
-    "*.jpeg",
-    "*.gif",
-    "*.webp",
-    "*.avif",
-    "*.svg",
-  },
-}
-
-local render_markdown_opts = {
-  checkbox = {
-    enabled = true,
-    bullet = false,
-    right_pad = 1,
-    unchecked = {
-      icon = "☐",
-      highlight = "RenderMarkdownUnchecked",
-    },
-    checked = {
-      icon = "⊡",
-      highlight = "RenderMarkdownChecked",
-      scope_highlight = "RenderMarkdownChecked",
-    },
-    custom = {
-      incomplete = {
-        raw = "[/]",
-        rendered = "◩",
-        highlight = "DiagnosticInfo",
-        scope_highlight = "DiagnosticInfo",
+local function setup()
+  require("render-markdown").setup {
+    checkbox = {
+      enabled = true,
+      bullet = false,
+      right_pad = 1,
+      unchecked = {
+        icon = "☐",
+        highlight = "RenderMarkdownUnchecked",
       },
-      canceled = {
-        raw = "[-]",
-        rendered = "⊟",
-        highlight = "Comment",
-        scope_highlight = "DiagnosticDeprecated",
+      checked = {
+        icon = "⊡",
+        highlight = "RenderMarkdownChecked",
+        scope_highlight = "RenderMarkdownChecked",
       },
-      important = {
-        raw = "[!]",
-        rendered = "◆",
-        highlight = "Title",
-        scope_highlight = "Title",
-      },
-      blocked = {
-        raw = "[^]",
-        rendered = "▨",
-        highlight = "DiagnosticWarn",
-        scope_highlight = "DiagnosticWarn",
+      custom = {
+        incomplete = {
+          raw = "[/]",
+          rendered = "◩",
+          highlight = "DiagnosticInfo",
+          scope_highlight = "DiagnosticInfo",
+        },
+        canceled = {
+          raw = "[-]",
+          rendered = "⊟",
+          highlight = "Comment",
+          scope_highlight = "DiagnosticDeprecated",
+        },
+        important = {
+          raw = "[!]",
+          rendered = "◆",
+          highlight = "Title",
+          scope_highlight = "Title",
+        },
+        blocked = {
+          raw = "[^]",
+          rendered = "▨",
+          highlight = "DiagnosticWarn",
+          scope_highlight = "DiagnosticWarn",
+        },
       },
     },
-  },
-  code = {
-    border = "thin",
-    language_icon = false,
-    language_name = false,
-    left_pad = 2,
-    right_pad = 2,
-    inline_pad = 1,
-    width = "block",
-  },
-  completions = { lsp = { enabled = true } },
-  heading = {
-    icons = { "󰼏 ", "󰎨 ", "󰼑 ", "󰎲 ", "󰼓 ", "󰎴 " },
-  },
-  pipe_table = {
-    alignment_indicator = "┅",
-    style = "normal",
-  },
-}
-
-local function setup_image()
-  require("image").setup(image_opts)
-
-  local processor = require "image/processors/magick_cli"
-  local convert_to_png = processor.convert_to_png
-  local resize = processor.resize
-  local magick = vim.fn.executable "magick" == 1 and "magick" or "convert"
-
-  processor.convert_to_png = function(path, output_path)
-    if
-      vim.fn.executable "rsvg-convert" == 1
-      and processor.get_format(path) == "svg"
-    then
-      local out_path = output_path or path:gsub("%.[^.]+$", ".png")
-      local result = vim
-        .system({
-          "rsvg-convert",
-          "--format",
-          "png",
-          "--zoom",
-          "4",
-          "--output",
-          out_path,
-          path,
-        })
-        :wait(10000)
-
-      if result.code ~= 0 then
-        error(
-          result.stderr ~= "" and result.stderr or "Failed to convert to PNG"
-        )
-      end
-
-      return out_path
-    end
-
-    return convert_to_png(path, output_path)
-  end
-
-  processor.resize = function(path, width, height, output_path)
-    local out_path = output_path or path:gsub("%.([^.]+)$", "-resized.%1")
-    local result = vim
-      .system({
-        magick,
-        path,
-        "-filter",
-        "Lanczos",
-        "-resize",
-        string.format("%dx%d", width, height),
-        out_path,
-      })
-      :wait(10000)
-
-    if result.code ~= 0 then
-      error(result.stderr ~= "" and result.stderr or "Failed to resize")
-    end
-
-    return out_path
-  end
-end
-
-local function setup_render_markdown()
-  require("render-markdown").setup(render_markdown_opts)
+    code = {
+      border = "thin",
+      language_icon = false,
+      language_name = false,
+      left_pad = 2,
+      right_pad = 2,
+      inline_pad = 1,
+      width = "block",
+    },
+    completions = { lsp = { enabled = true } },
+    heading = {
+      icons = { "󰼏 ", "󰎨 ", "󰼑 ", "󰎲 ", "󰼓 ", "󰎴 " },
+    },
+    pipe_table = {
+      alignment_indicator = "┅",
+      style = "normal",
+    },
+  }
 
   local cycle = { "[ ]", "[/]", "[x]" }
   local pattern = "^(%s*)([^%[%s]+%s+)(%[[^%]]%])(.*)$"
@@ -292,35 +199,17 @@ local function setup_render_markdown()
   })
 end
 
-lazy {
-  github "3rd/image.nvim",
-  github "MeanderingProgrammer/render-markdown.nvim",
+p.eager {
+  p.github "nvim-tree/nvim-web-devicons",
+  p.github "tpope/vim-repeat",
 }
+p.lazy { p.github "MeanderingProgrammer/render-markdown.nvim" }
 
 require("lz.n").load {
-  {
-    "image.nvim",
-    ft = "markdown",
-    event = {
-      {
-        event = { "BufReadPre", "BufNewFile" },
-        pattern = {
-          "*.png",
-          "*.jpg",
-          "*.jpeg",
-          "*.gif",
-          "*.webp",
-          "*.avif",
-          "*.svg",
-        },
-      },
-    },
-    after = setup_image,
-  },
   {
     "render-markdown.nvim",
     ft = "markdown",
     before = function() require("lz.n").trigger_load "image.nvim" end,
-    after = setup_render_markdown,
+    after = setup,
   },
 }
