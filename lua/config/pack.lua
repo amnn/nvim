@@ -59,6 +59,10 @@ eager {
   -- Theming
   github("projekt0n/github-nvim-theme", nil, "github-theme"),
   github("cormacrelf/dark-notify", vim.version.range "*"),
+
+  -- Pickers and navigation
+  -- Oil must initialize before startup directory handling to replace netrw.
+  github("stevearc/oil.nvim", vim.version.range "*"),
 }
 
 lib {
@@ -80,7 +84,6 @@ lazy {
   github "ahmedkhalf/project.nvim",
   github("folke/which-key.nvim", vim.version.range "*"),
   github "ibhagwan/fzf-lua",
-  github("stevearc/oil.nvim", vim.version.range "*"),
   github("stevearc/quicker.nvim", vim.version.range "*"),
 
   -- Text editing
