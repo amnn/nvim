@@ -14,8 +14,7 @@ vim.opt.foldmethod = "expr"
 vim.opt.foldenable = false
 vim.opt.foldlevel = 99
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
--- TODO Waiting for treesitter foldtext support to be released.
--- vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
+vim.opt.foldtext = ""
 
 -- Word-wrap
 vim.opt.linebreak = true
@@ -74,8 +73,3 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = ";"
 
 require "config.pack"
-
--- FIXME fzf live grep hangs on <C-c> -- fixed by neovim/neovim#30056
-
--- TODO Investigate issue with nvim taking a while to close:
--- nvim -V10vim.log will offer debug of what is going on.
