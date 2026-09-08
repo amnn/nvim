@@ -48,5 +48,22 @@ local function setup()
   })
 end
 
-p.eager { p.github("nvim-treesitter/nvim-treesitter", "main") }
-setup()
+p.lazy { p.github("nvim-treesitter/nvim-treesitter", "main") }
+
+require("lz.n").load {
+  {
+    "nvim-treesitter",
+    event = {
+      "DeferredUIEnter",
+      { event = "FileType", pattern = ensure_installed },
+    },
+    cmd = {
+      "TSInstall",
+      "TSInstallFromGrammar",
+      "TSLog",
+      "TSUninstall",
+      "TSUpdate",
+    },
+    after = setup,
+  },
+}

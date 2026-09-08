@@ -44,5 +44,13 @@ local function setup()
   }
 end
 
-p.eager { p.github("stevearc/conform.nvim", vim.version.range "*") }
-setup()
+p.lazy { p.github("stevearc/conform.nvim", vim.version.range "*") }
+
+require("lz.n").load {
+  {
+    "conform.nvim",
+    event = "BufWritePre",
+    cmd = "ConformInfo",
+    after = setup,
+  },
+}

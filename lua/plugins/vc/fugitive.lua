@@ -10,5 +10,59 @@ local function setup()
   })
 end
 
-p.eager { p.github "tpope/vim-fugitive" }
+p.lazy { p.github "tpope/vim-fugitive" }
 setup()
+
+require("lz.n").load {
+  {
+    "vim-fugitive",
+    cmd = {
+      "G",
+      "GBrowse",
+      "GDelete",
+      "GMove",
+      "GRemove",
+      "GRename",
+      "GUnlink",
+      "Gblame",
+      "Gbrowse",
+      "GcLog",
+      "Gcd",
+      "Gclog",
+      "Gcommit",
+      "Gdelete",
+      "Gdiffsplit",
+      "Ge",
+      "Gedit",
+      "Gfetch",
+      "Ggrep",
+      "Ghdiffsplit",
+      "Git",
+      "GlLog",
+      "Glcd",
+      "Glgrep",
+      "Gllog",
+      "Glog",
+      "Gmerge",
+      "Gmove",
+      "Gpedit",
+      "Gpull",
+      "Gpush",
+      "Gr",
+      "Gread",
+      "Grebase",
+      "Gremove",
+      "Grename",
+      "Grevert",
+      "Gsplit",
+      "Gstatus",
+      "Gtabedit",
+      "Gvdiffsplit",
+      "Gvsplit",
+      "Gw",
+      "Gwq",
+      "Gwrite",
+    },
+    after = function() require("lz.n").trigger_load "vim-rhubarb" end,
+  },
+}

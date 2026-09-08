@@ -19,5 +19,12 @@ local function setup()
   }
 end
 
-p.eager { p.github "m4xshen/autoclose.nvim" }
-setup()
+p.lazy { p.github "m4xshen/autoclose.nvim" }
+
+require("lz.n").load {
+  {
+    "autoclose.nvim",
+    event = "InsertEnter",
+    after = setup,
+  },
+}

@@ -6,5 +6,13 @@ local function setup()
   }
 end
 
-p.eager { p.github("williamboman/mason-lspconfig.nvim", vim.version.range "*") }
-setup()
+p.lazy { p.github("williamboman/mason-lspconfig.nvim", vim.version.range "*") }
+
+require("lz.n").load {
+  {
+    "mason-lspconfig.nvim",
+    cmd = { "LspInstall", "LspUninstall" },
+    before = function() require("lz.n").trigger_load "mason.nvim" end,
+    after = setup,
+  },
+}

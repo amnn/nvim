@@ -17,23 +17,30 @@ local function setup()
       winbar = "%{v:lua.require('oil').get_current_dir()}",
     },
   }
-
-  vim.keymap.set(
-    "n",
-    "-",
-    function() require("oil").open(vim.fn.expand "%:h") end,
-    { desc = "Open parent directory (Oil)" }
-  )
-  vim.keymap.set(
-    "n",
-    "_",
-    function() require("oil").open(vim.fn.getcwd()) end,
-    { desc = "Open Neovim's current working directory (Oil)" }
-  )
 end
 
-p.eager {
+p.lazy {
   p.github("stevearc/oil.nvim", vim.version.range "*"),
   p.github "nvim-tree/nvim-web-devicons",
 }
-setup()
+
+require("lz.n").load {
+  {
+    "oil.nvim",
+    cmd = "Oil",
+    before = function() vim.cmd.packadd "nvim-web-devicons" end,
+    keys = {
+      {
+        "-",
+        function() require("oil").open(vim.fn.expand "%:h") end,
+        desc = "Open parent directory (Oil)",
+      },
+      {
+        "_",
+        function() require("oil").open(vim.fn.getcwd()) end,
+        desc = "Open Neovim's current working directory (Oil)",
+      },
+    },
+    after = setup,
+  },
+}

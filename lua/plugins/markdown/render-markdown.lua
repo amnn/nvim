@@ -199,17 +199,21 @@ local function setup()
   })
 end
 
-p.eager {
+p.lazy {
+  p.github "MeanderingProgrammer/render-markdown.nvim",
   p.github "nvim-tree/nvim-web-devicons",
   p.github "tpope/vim-repeat",
 }
-p.lazy { p.github "MeanderingProgrammer/render-markdown.nvim" }
 
 require("lz.n").load {
   {
     "render-markdown.nvim",
     ft = "markdown",
-    before = function() require("lz.n").trigger_load "image.nvim" end,
+    before = function()
+      vim.cmd.packadd "nvim-web-devicons"
+      vim.cmd.packadd "vim-repeat"
+      require("lz.n").trigger_load "image.nvim"
+    end,
     after = setup,
   },
 }

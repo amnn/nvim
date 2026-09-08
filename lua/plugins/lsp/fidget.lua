@@ -8,5 +8,13 @@ local function setup()
   }
 end
 
-p.eager { p.github("j-hui/fidget.nvim", vim.version.range "*") }
-setup()
+p.lazy { p.github("j-hui/fidget.nvim", vim.version.range "*") }
+
+require("lz.n").load {
+  {
+    "fidget.nvim",
+    event = "LspAttach",
+    cmd = "Fidget",
+    after = setup,
+  },
+}

@@ -45,8 +45,17 @@ local function setup()
   )
 end
 
-p.eager {
+p.lazy {
   p.github "lewis6991/gitsigns.nvim",
   p.github "tpope/vim-repeat",
 }
-setup()
+
+require("lz.n").load {
+  {
+    "gitsigns.nvim",
+    event = { "BufReadPost", "BufNewFile" },
+    cmd = { "GHunk", "Gitsigns" },
+    before = function() vim.cmd.packadd "vim-repeat" end,
+    after = setup,
+  },
+}

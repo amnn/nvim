@@ -14,16 +14,20 @@ local function setup()
   }
 end
 
-p.eager {
+p.lazy {
+  p.github "julienvincent/hunk.nvim",
   p.github "MunifTanjim/nui.nvim",
   p.github "nvim-tree/nvim-web-devicons",
 }
-p.lazy { p.github "julienvincent/hunk.nvim" }
 
 require("lz.n").load {
   {
     "hunk.nvim",
     cmd = "DiffEditor",
+    before = function()
+      vim.cmd.packadd "nui.nvim"
+      vim.cmd.packadd "nvim-web-devicons"
+    end,
     after = setup,
   },
 }

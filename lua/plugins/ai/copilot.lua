@@ -42,5 +42,13 @@ local function setup()
   })
 end
 
-p.eager { p.github("github/copilot.vim", vim.version.range "*") }
+p.lazy { p.github("github/copilot.vim", vim.version.range "*") }
 setup()
+
+require("lz.n").load {
+  {
+    "copilot.vim",
+    event = "InsertEnter",
+    cmd = "Copilot",
+  },
+}

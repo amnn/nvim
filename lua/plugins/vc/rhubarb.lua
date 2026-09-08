@@ -24,5 +24,12 @@ local function setup()
   })
 end
 
-p.eager { p.github "tpope/vim-rhubarb" }
+p.lazy { p.github "tpope/vim-rhubarb" }
 setup()
+
+require("lz.n").load {
+  {
+    "vim-rhubarb",
+    lazy = true,
+  },
+}

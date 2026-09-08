@@ -18,5 +18,13 @@ local function setup()
   }
 end
 
-p.eager { p.github("saghen/blink.cmp", vim.version.range "1") }
-setup()
+p.lazy { p.github("saghen/blink.cmp", vim.version.range "1") }
+
+require("lz.n").load {
+  {
+    "blink.cmp",
+    event = { "CmdlineEnter", "InsertEnter" },
+    cmd = "BlinkCmp",
+    after = setup,
+  },
+}

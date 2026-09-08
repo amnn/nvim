@@ -17,8 +17,16 @@ local function setup()
   }
 end
 
-p.eager {
+p.lazy {
   p.github "nvim-lualine/lualine.nvim",
   p.github "nvim-tree/nvim-web-devicons",
 }
-setup()
+
+require("lz.n").load {
+  {
+    "lualine.nvim",
+    event = "DeferredUIEnter",
+    before = function() vim.cmd.packadd "nvim-web-devicons" end,
+    after = setup,
+  },
+}

@@ -8,8 +8,11 @@ vim.api.nvim_create_autocmd("PackChanged", {
 
     if n == "nvim-treesitter" and (k == "install" or k == "update") then
       vim.schedule(function()
-        local ok, treesitter = pcall(require, "nvim-treesitter")
-        if ok then treesitter.update() end
+        local ok, lz = pcall(require, "lz.n")
+        if ok then lz.trigger_load "nvim-treesitter" end
+
+        local loaded, treesitter = pcall(require, "nvim-treesitter")
+        if loaded then treesitter.update() end
       end)
     end
   end,

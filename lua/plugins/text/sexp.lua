@@ -23,8 +23,16 @@ local function setup()
   }
 end
 
-p.eager {
+p.lazy {
   p.github "Grazfather/sexp.nvim",
   p.github "tpope/vim-repeat",
 }
-setup()
+
+require("lz.n").load {
+  {
+    "sexp.nvim",
+    ft = { "clojure", "fennel", "lisp", "scheme", "timl" },
+    before = function() vim.cmd.packadd "vim-repeat" end,
+    after = setup,
+  },
+}

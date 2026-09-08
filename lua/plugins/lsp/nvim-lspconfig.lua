@@ -1,5 +1,29 @@
 local p = require "config.packages"
 
+local filetypes = {
+  "c",
+  "c.doxygen",
+  "cpp",
+  "cpp.doxygen",
+  "cuda",
+  "go",
+  "gomod",
+  "gotmpl",
+  "gowork",
+  "javascript",
+  "javascriptreact",
+  "lua",
+  "move",
+  "objc",
+  "objcpp",
+  "rust",
+  "typescript",
+  "typescriptreact",
+  "typst",
+  "zig",
+  "zir",
+}
+
 local function setup()
   local capabilities = require("blink.cmp").get_lsp_capabilities({
     workspace = {
@@ -144,5 +168,15 @@ local function setup()
   vim.lsp.enable "zls"
 end
 
-p.eager { p.github("neovim/nvim-lspconfig", vim.version.range "*") }
-setup()
+p.lazy { p.github("neovim/nvim-lspconfig", vim.version.range "*") }
+
+require("lz.n").load {
+  {
+    "nvim-lspconfig",
+    ft = filetypes,
+    before = function()
+      require("lz.n").trigger_load { "blink.cmp", "mason.nvim" }
+    end,
+    after = setup,
+  },
+}
