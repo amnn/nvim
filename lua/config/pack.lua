@@ -34,6 +34,24 @@ vim.api.nvim_create_autocmd("PackChanged", {
   end,
 })
 
+vim.api.nvim_create_user_command("Pack", function(opts)
+  local names = #opts.fargs > 0 and opts.fargs or nil
+  vim.pack.update(names, { offline = opts.bang })
+end, {
+  bang = true,
+  nargs = "*",
+  complete = function(arg_lead)
+    local names = vim
+      .iter(vim.pack.get(nil, { info = false }))
+      :map(function(plugin) return plugin.spec.name end)
+      :filter(function(name) return vim.startswith(name, arg_lead) end)
+      :totable()
+    table.sort(names)
+    return names
+  end,
+  desc = "Review package updates (! uses cached refs)",
+})
+
 eager {
   -- Infrastructure
   github("lumen-oss/lz.n", vim.version.range "3"),
