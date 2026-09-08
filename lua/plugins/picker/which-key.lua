@@ -1,12 +1,3 @@
-local p = require "config.packages"
-
-local function setup() require("which-key").setup {} end
-
-p.lazy {
-  p.github("folke/which-key.nvim", vim.version.range "*"),
-  p.github "nvim-tree/nvim-web-devicons",
-}
-
 require("lz.n").load {
   {
     "which-key.nvim",
@@ -20,6 +11,6 @@ require("lz.n").load {
         desc = "Buffer local Keymaps (Which Key)",
       },
     },
-    after = setup,
+    after = function() require("which-key").setup {} end,
   },
 }

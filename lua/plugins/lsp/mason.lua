@@ -1,9 +1,3 @@
-local p = require "config.packages"
-
-local function setup() require("mason").setup {} end
-
-p.lazy { p.github("williamboman/mason.nvim", vim.version.range "*") }
-
 require("lz.n").load {
   {
     "mason.nvim",
@@ -15,6 +9,6 @@ require("lz.n").load {
       "MasonUninstallAll",
       "MasonUpdate",
     },
-    after = setup,
+    after = function() require("mason").setup {} end,
   },
 }

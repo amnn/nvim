@@ -1,13 +1,3 @@
-local p = require "config.packages"
-
-local function setup()
-  require("flash").setup {
-    keys = { "f", "F", "t", "T", [";"] = "\\", "," },
-  }
-end
-
-p.lazy { p.github("folke/flash.nvim", vim.version.range "*") }
-
 require("lz.n").load {
   {
     "flash.nvim",
@@ -31,6 +21,10 @@ require("lz.n").load {
         desc = "Toggle Search (Flash)",
       },
     },
-    after = setup,
+    after = function()
+      require("flash").setup {
+        keys = { "f", "F", "t", "T", [";"] = "\\", "," },
+      }
+    end,
   },
 }

@@ -1,3 +1,17 @@
+local function github(repository, version, name)
+  return {
+    src = "https://github.com/" .. repository,
+    name = name or repository:match "([^/]+)$",
+    version = version,
+  }
+end
+
+local function eager(specs) vim.pack.add(specs, { confirm = false }) end
+
+local function lazy(specs)
+  vim.pack.add(specs, { confirm = false, load = function() end })
+end
+
 local group = vim.api.nvim_create_augroup("pack_hooks", { clear = true })
 
 vim.api.nvim_create_autocmd("PackChanged", {
@@ -18,7 +32,71 @@ vim.api.nvim_create_autocmd("PackChanged", {
   end,
 })
 
-require "plugins.lz"
+eager {
+  -- Infrastructure
+  github("lumen-oss/lz.n", vim.version.range "3"),
+
+  -- Theming
+  github("projekt0n/github-nvim-theme", nil, "github-theme"),
+  github("cormacrelf/dark-notify", vim.version.range "*"),
+}
+
+lazy {
+  -- Theming
+  github "nvim-lualine/lualine.nvim",
+  github "nvim-tree/nvim-web-devicons",
+
+  -- Treesitter
+  github("nvim-treesitter/nvim-treesitter", "main"),
+  github "nvim-treesitter/nvim-treesitter-context",
+
+  -- Pickers and navigation
+  github "ahmedkhalf/project.nvim",
+  github("folke/which-key.nvim", vim.version.range "*"),
+  github "ibhagwan/fzf-lua",
+  github("stevearc/oil.nvim", vim.version.range "*"),
+  github("stevearc/quicker.nvim", vim.version.range "*"),
+
+  -- Text editing
+  github "Grazfather/sexp.nvim",
+  github "tpope/vim-repeat",
+  github("HiPhish/rainbow-delimiters.nvim", vim.version.range "*"),
+  github("cappyzawa/trim.nvim", vim.version.range "*"),
+  github("folke/flash.nvim", vim.version.range "*"),
+  github("folke/todo-comments.nvim", vim.version.range "*"),
+  github "nvim-lua/plenary.nvim",
+  github("kylechui/nvim-surround", vim.version.range "*"),
+  github "m4xshen/autoclose.nvim",
+
+  -- Windows
+  github "sindrets/winshift.nvim",
+
+  -- Version control
+  github "tpope/vim-fugitive",
+  github "tpope/vim-rhubarb",
+  github "lewis6991/gitsigns.nvim",
+  github "julienvincent/hunk.nvim",
+  github "MunifTanjim/nui.nvim",
+
+  -- AI
+  github("github/copilot.vim", vim.version.range "*"),
+
+  -- Language tooling
+  github("williamboman/mason.nvim", vim.version.range "*"),
+  github("williamboman/mason-lspconfig.nvim", vim.version.range "*"),
+  github("neovim/nvim-lspconfig", vim.version.range "*"),
+  github "amnn/lsp-echohint.nvim",
+  github("saghen/blink.cmp", vim.version.range "1"),
+  github("j-hui/fidget.nvim", vim.version.range "*"),
+  github("stevearc/conform.nvim", vim.version.range "*"),
+
+  -- Languages and file types
+  github("saecki/crates.nvim", "stable"),
+  github "3rd/image.nvim",
+  github "MeanderingProgrammer/render-markdown.nvim",
+}
+
+-- Configuration
 
 -- Theming
 require "plugins.theming.github-theme"

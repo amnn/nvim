@@ -1,17 +1,3 @@
-local p = require "config.packages"
-
-local function setup()
-  require("winshift").setup {
-    keymaps = {
-      win_move_mode = {
-        ["s"] = "swap",
-      },
-    },
-  }
-end
-
-p.lazy { p.github "sindrets/winshift.nvim" }
-
 require("lz.n").load {
   {
     "winshift.nvim",
@@ -30,6 +16,14 @@ require("lz.n").load {
         desc = "Swap windows (WinShift)",
       },
     },
-    after = setup,
+    after = function()
+      require("winshift").setup {
+        keymaps = {
+          win_move_mode = {
+            ["s"] = "swap",
+          },
+        },
+      }
+    end,
   },
 }

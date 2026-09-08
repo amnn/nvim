@@ -1,49 +1,44 @@
-local p = require "config.packages"
+local map = vim.keymap.set
 
-local function setup()
-  -- Keybindings for copying file paths and regions to clipboard
-  vim.keymap.set("n", "<leader>yf", function()
-    local filepath = vim.fn.expand "%:p"
-    vim.fn.setreg("+", filepath)
-    print("Copied file path: " .. filepath)
-  end, { desc = "[Y]ank [f]ile path" })
+-- Keybindings for copying file paths and regions to clipboard
+map("n", "<leader>yf", function()
+  local filepath = vim.fn.expand "%:p"
+  vim.fn.setreg("+", filepath)
+  print("Copied file path: " .. filepath)
+end, { desc = "[Y]ank [f]ile path" })
 
-  vim.keymap.set("n", "<leader>yl", function()
+map("n", "<leader>yl", function()
+  local filepath = vim.fn.expand "%:p"
+  local line = vim.fn.line "."
+  local result = filepath .. ":" .. line
+  vim.fn.setreg("+", result)
+  print("Copied file:line: " .. result)
+end, { desc = "[Y]ank file path with [l]ine number" })
+
+map("v", "<leader>yl", function()
+  -- Exit visual mode first to ensure marks are set
+  vim.api.nvim_feedkeys(
+    vim.api.nvim_replace_termcodes("<Esc>", true, false, true),
+    "n",
+    false
+  )
+  vim.schedule(function()
     local filepath = vim.fn.expand "%:p"
-    local line = vim.fn.line "."
-    local result = filepath .. ":" .. line
+    local start_line = vim.fn.line "'<"
+    local end_line = vim.fn.line "'>"
+    local result = filepath .. ":" .. start_line .. "-" .. end_line
     vim.fn.setreg("+", result)
-    print("Copied file:line: " .. result)
-  end, { desc = "[Y]ank file path with [l]ine number" })
+    print("Copied file:region: " .. result)
+  end)
+end, { desc = "[Y]ank file path with [l]ine range" })
 
-  vim.keymap.set("v", "<leader>yl", function()
-    -- Exit visual mode first to ensure marks are set
-    vim.api.nvim_feedkeys(
-      vim.api.nvim_replace_termcodes("<Esc>", true, false, true),
-      "n",
-      false
-    )
-    vim.schedule(function()
-      local filepath = vim.fn.expand "%:p"
-      local start_line = vim.fn.line "'<"
-      local end_line = vim.fn.line "'>"
-      local result = filepath .. ":" .. start_line .. "-" .. end_line
-      vim.fn.setreg("+", result)
-      print("Copied file:region: " .. result)
-    end)
-  end, { desc = "[Y]ank file path with [l]ine range" })
-
-  -- Replace tab as copilot's accept keybinding with Ctrl+j
-  vim.g.copilot_no_tab_map = true
-  vim.keymap.set("i", "<C-j>", 'copilot#Accept("\\<CR>")', {
-    expr = true,
-    replace_keycodes = false,
-    desc = "Accept suggestion (Copilot)",
-  })
-end
-
-p.lazy { p.github("github/copilot.vim", vim.version.range "*") }
-setup()
+-- Replace tab as copilot's accept keybinding with Ctrl+j
+vim.g.copilot_no_tab_map = true
+map("i", "<C-j>", 'copilot#Accept("\\<CR>")', {
+  expr = true,
+  replace_keycodes = false,
+  desc = "Accept suggestion (Copilot)",
+})
 
 require("lz.n").load {
   {

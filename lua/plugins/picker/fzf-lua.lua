@@ -1,20 +1,3 @@
-local p = require "config.packages"
-
-local function setup()
-  local fzf = require "fzf-lua"
-  fzf.setup {
-    winopts = {
-      width = 0.6,
-      backdrop = 100,
-      preview = {
-        layout = "flex",
-        flip_columns = 200,
-      },
-    },
-  }
-  fzf.register_ui_select()
-end
-
 local function open_project()
   require("lz.n").trigger_load "project.nvim"
 
@@ -84,11 +67,6 @@ end
 vim.keymap.set("n", "<leader>r", function() vim.lsp.buf.rename() end, {
   desc = "[R]ename symbol (LSP)",
 })
-
-p.lazy {
-  p.github "ibhagwan/fzf-lua",
-  p.github "nvim-tree/nvim-web-devicons",
-}
 
 require("lz.n").load {
   {
@@ -192,6 +170,19 @@ require("lz.n").load {
         desc = "List [o]utgoing [c]alls (fzf)",
       },
     },
-    after = setup,
+    after = function()
+      local fzf = require "fzf-lua"
+      fzf.setup {
+        winopts = {
+          width = 0.6,
+          backdrop = 100,
+          preview = {
+            layout = "flex",
+            flip_columns = 200,
+          },
+        },
+      }
+      fzf.register_ui_select()
+    end,
   },
 }
