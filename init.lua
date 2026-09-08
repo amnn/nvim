@@ -10,11 +10,17 @@ vim.opt.softtabstop = 2
 vim.opt.tabstop = 2
 
 -- Folding
-vim.opt.foldmethod = "expr"
-vim.opt.foldenable = false
+vim.opt.foldcolumn = "1"
+vim.opt.foldenable = true
 vim.opt.foldlevel = 99
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.opt.foldtext = ""
+vim.opt.foldlevelstart = 99
+vim.opt.fillchars:append {
+  fold = " ",
+  foldclose = "",
+  foldinner = " ",
+  foldopen = "",
+  foldsep = " ",
+}
 
 -- Word-wrap
 vim.opt.linebreak = true

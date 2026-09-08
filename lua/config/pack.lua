@@ -70,6 +70,7 @@ lib {
   github "nvim-lua/plenary.nvim",
   github "MunifTanjim/nui.nvim",
   github "tpope/vim-repeat",
+  github "kevinhwang91/promise-async",
 }
 
 lazy {
@@ -97,6 +98,9 @@ lazy {
 
   -- Windows
   github "sindrets/winshift.nvim",
+
+  -- Folding
+  github "kevinhwang91/nvim-ufo",
 
   -- Version control
   github "tpope/vim-fugitive",
@@ -152,6 +156,9 @@ require "plugins.text.autoclose"
 
 -- Windows
 require "plugins.window.winshift"
+
+-- Folding
+require "plugins.folding.nvim-ufo"
 
 -- Version control
 require "plugins.vc.fugitive"
