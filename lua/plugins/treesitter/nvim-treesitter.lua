@@ -29,9 +29,10 @@ local function setup()
     callback = function()
       require("nvim-treesitter.parsers").move = {
         install_info = {
-          url = "https://github.com/mystenlabs/sui",
-          revision = "main",
-          path = "~/Code/tree-sitter-move/external-crates/move/tooling/tree-sitter",
+          url = "https://github.com/MystenLabs/sui",
+          revision = "4ba6c1fe30a78be877812cf6619f4a2534cd496d",
+          location = "external-crates/move/tooling/tree-sitter",
+          queries = "external-crates/move/tooling/tree-sitter/queries",
         },
         tier = 2,
       }
