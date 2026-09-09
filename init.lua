@@ -1,3 +1,7 @@
+-- Match macOS appearance before loading the theme; dark-notify handles later changes.
+local interface_style = vim.fn.system { "defaults", "read", "-g", "AppleInterfaceStyle" }
+vim.opt.background = vim.trim(interface_style) == "Dark" and "dark" or "light"
+
 -- Search
 vim.opt.smartcase = true
 vim.opt.ignorecase = true

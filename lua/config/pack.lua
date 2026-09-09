@@ -59,6 +59,7 @@ eager {
   -- Theming
   github("projekt0n/github-nvim-theme", nil, "github-theme"),
   github("cormacrelf/dark-notify", vim.version.range "*"),
+  github "nvim-lualine/lualine.nvim",
 
   -- Pickers and navigation
   -- Oil must initialize before startup directory handling to replace netrw.
@@ -74,9 +75,6 @@ lib {
 }
 
 lazy {
-  -- Theming
-  github "nvim-lualine/lualine.nvim",
-
   -- Treesitter
   github("nvim-treesitter/nvim-treesitter", "main"),
   github "nvim-treesitter/nvim-treesitter-context",
