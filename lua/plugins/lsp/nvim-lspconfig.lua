@@ -95,6 +95,15 @@ require("lz.n").load {
       })
 
       vim.lsp.config("rust_analyzer", {
+        -- Bypass Mason's standalone analyzer: it can lag behind the project's
+        -- standard library. Run the rustup shim from the workspace so it also
+        -- honors rust-toolchain.toml when Neovim was started elsewhere.
+        cmd = function(dispatchers, config)
+          local cargo_home = vim.env.CARGO_HOME or vim.fn.expand "~/.cargo"
+          return vim.lsp.rpc.start({ cargo_home .. "/bin/rust-analyzer" }, dispatchers, {
+            cwd = config.root_dir,
+          })
+        end,
         capabilities = capabilities,
         settings = {
           ["rust-analyzer"] = {
