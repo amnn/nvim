@@ -14,6 +14,8 @@ local filetypes = {
   "move",
   "objc",
   "objcpp",
+  "ocaml",
+  "ocaml.interface",
   "rust",
   "typescript",
   "typescriptreact",
@@ -92,6 +94,16 @@ require("lz.n").load {
             hint = { enable = true },
           },
         },
+      })
+
+      vim.lsp.config("ocamllsp", {
+        -- Use Dune's project-matched server even when Neovim starts elsewhere.
+        cmd = function(dispatchers, config)
+          return vim.lsp.rpc.start({ "dune", "tools", "exec", "ocamllsp" }, dispatchers, {
+            cwd = config.root_dir,
+          })
+        end,
+        capabilities = capabilities,
       })
 
       vim.lsp.config("rust_analyzer", {
@@ -174,6 +186,7 @@ require("lz.n").load {
 
       vim.lsp.enable "gopls"
       vim.lsp.enable "lua_ls"
+      vim.lsp.enable "ocamllsp"
       vim.lsp.enable "rust_analyzer"
       vim.lsp.enable "clangd"
       vim.lsp.enable "ts_ls"

@@ -30,6 +30,8 @@ local languages = {
       tier = 2,
     },
   },
+  { parser = "ocaml" },
+  { parser = "ocaml_interface", filetypes = { "ocaml.interface" } },
   { parser = "python", filetypes = { "python", "py", "gyp" } },
   { parser = "rust" },
   { parser = "scheme", context = false },

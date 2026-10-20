@@ -87,7 +87,7 @@ lazy {
 
   -- Text editing
   github "Grazfather/sexp.nvim",
-  github("HiPhish/rainbow-delimiters.nvim", vim.version.range "*"),
+  github "HiPhish/rainbow-delimiters.nvim",
   github("cappyzawa/trim.nvim", vim.version.range "*"),
   github("folke/flash.nvim", vim.version.range "*"),
   github("folke/todo-comments.nvim", vim.version.range "*"),

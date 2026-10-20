@@ -13,6 +13,8 @@ require("lz.n").load {
           javascript = { "prettier" },
           lua = { "stylua" },
           move = { "prettier-move" },
+          ocaml = { "ocamlformat" },
+          ["ocaml.interface"] = { "ocamlformat" },
           python = { "black" },
           rust = { "rustfmt" },
           swift = { "swift" },

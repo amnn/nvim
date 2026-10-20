@@ -136,9 +136,8 @@
       "version": ">=0.0.0"
     },
     "rainbow-delimiters.nvim": {
-      "rev": "b81d594e82b6ca1530797bdcfd16a1219250a2d8",
-      "src": "https://github.com/HiPhish/rainbow-delimiters.nvim",
-      "version": ">=0.0.0"
+      "rev": "65734f76783705255d9ede8a6e4692e1572801a5",
+      "src": "https://github.com/HiPhish/rainbow-delimiters.nvim"
     },
     "render-markdown.nvim": {
       "rev": "4663eb3ecd538bd5062628fb6d95bbe6bdca78f6",
